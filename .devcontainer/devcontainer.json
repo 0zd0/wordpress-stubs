@@ -9,6 +9,9 @@
             "plugins": []
         }
     },
+    "mounts": [
+        "source=${localWorkspaceFolder}/.devcontainer/php/php.ini,target=/usr/local/etc/php/conf.d/custom.ini,type=bind"
+    ],
     "remoteUser": "root",
     "postCreateCommand": "composer install"
 }
