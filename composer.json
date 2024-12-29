@@ -1,18 +1,18 @@
 {
-    "name": "php-stubs/wordpress-stubs",
+    "name": "onepix/wordpress-stubs",
     "description": "WordPress function and class declaration stubs for static analysis.",
     "license": "MIT",
     "keywords": [
         "wordpress",
         "static analysis",
-        "phpstan"
+        "phpstan",
+        "psalm"
     ],
-    "homepage": "https://github.com/php-stubs/wordpress-stubs",
+    "homepage": "https://github.com/0zd0/wordpress-stubs",
     "require-dev": {
-        "php": "^7.4 || ^8.0",
+        "php": "^8.1",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
-        "nikic/php-parser": "^4.13",
-        "php-stubs/generator": "^0.8.3",
+        "onepix/wordpress-stubs-generator": "^1.0",
         "phpdocumentor/reflection-docblock": "^5.4.1",
         "phpstan/phpstan": "^1.11",
         "phpunit/phpunit": "^9.5",
@@ -35,12 +35,15 @@
     },
     "config": {
         "allow-plugins": {
-            "php-stubs/generator": true,
+            "onepix/wordpress-stubs-generator": true,
             "dealerdirect/phpcodesniffer-composer-installer": true
         },
         "platform": {
-            "php": "7.4.30"
+            "php": "8.1.0"
         }
+    },
+    "replace": {
+        "php-stubs/wordpress-stubs": "*"
     },
     "scripts": {
         "post-install-cmd": "@composer --working-dir=source/ update --no-interaction",
