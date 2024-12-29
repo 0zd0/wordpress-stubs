@@ -1,5 +1,5 @@
-/.devcontainer export-ignore
-/.github export-ignore
+/.devcontainer/ export-ignore
+/.github/ export-ignore
 /source/ export-ignore
 /src/ export-ignore
 /tests/ export-ignore
