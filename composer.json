@@ -13,16 +13,11 @@
         "php": "^8.1",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
         "onepix/wordpress-stubs-generator": "^1.0",
-        "phpdocumentor/reflection-docblock": "^5.4.1",
-        "phpstan/phpstan": "^1.11",
-        "phpunit/phpunit": "^9.5",
         "szepeviktor/phpcs-psr-12-neutron-hybrid-ruleset": "^1.1.1",
-        "wp-coding-standards/wpcs": "3.1.0 as 2.3.0"
-    },
-    "suggest": {
-        "paragonie/sodium_compat": "Pure PHP implementation of libsodium",
-        "symfony/polyfill-php80": "Symfony polyfill backporting some PHP 8.0+ features to lower PHP versions",
-        "szepeviktor/phpstan-wordpress": "WordPress extensions for PHPStan"
+        "wp-coding-standards/wpcs": "3.1.0 as 2.3.0",
+        "phpdocumentor/reflection-docblock": "^5.6",
+        "phpunit/phpunit": "^9.6",
+        "phpstan/phpstan": "^1.10"
     },
     "minimum-stability": "stable",
     "autoload-dev": {
