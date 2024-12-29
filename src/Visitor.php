@@ -53,11 +53,14 @@ class Visitor extends NodeVisitor
 
     private \PhpParser\NodeFinder $nodeFinder;
 
+    private ConstantsExtractor $constantsExtractor;
+
     public function __construct()
     {
         $this->docBlockFactory = \phpDocumentor\Reflection\DocBlockFactory::createInstance();
         $this->nodeFinder = new NodeFinder();
         $this->functionMap = require sprintf('%s/functionMap.php', dirname(__DIR__));
+        $this->constantsExtractor = new ConstantsExtractor($this);
     }
 
     /**
@@ -66,6 +69,8 @@ class Visitor extends NodeVisitor
     public function enterNode(Node $node)
     {
         $voidOrNever = $this->voidOrNever($node);
+
+        $this->constantsExtractor->processNode($node);
 
         parent::enterNode($node);
 
@@ -212,7 +217,7 @@ class Visitor extends NodeVisitor
             return [];
         }
 
-        /** @var list<\phpDocumentor\Reflection\DocBlock\Tags\Param> $paramTags*/
+        /** @var list<\phpDocumentor\Reflection\DocBlock\Tags\Param> $paramTags */
         $paramTags = $docblock->getTagsByName('param');
 
         /** @var list<\phpDocumentor\Reflection\DocBlock\Tags\Return_> $returnTags */
@@ -444,7 +449,7 @@ class Visitor extends NodeVisitor
 
         foreach ($parameters as $paramName => $paramType) {
             if (strpos($paramName, '@') === 0) {
-                $format = ( $paramType === '' ) ? '%s' : '%s %s';
+                $format = ($paramType === '') ? '%s' : '%s %s';
                 $additions[] = sprintf(
                     $format,
                     $paramName,
@@ -671,8 +676,8 @@ class Visitor extends NodeVisitor
 
         $tagVariableType = str_replace(
             [
-            'stdClass',
-            '\\object',
+                'stdClass',
+                '\\object',
             ],
             'object',
             $tagVariableType

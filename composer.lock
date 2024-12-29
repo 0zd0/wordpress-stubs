@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b382c57e528616e092971bf9230a564",
+    "content-hash": "3be43728cbaca99a18dfd44478e8c811",
     "packages": [],
     "packages-dev": [
         {
@@ -404,16 +404,16 @@
         },
         {
             "name": "onepix/wordpress-stubs-generator",
-            "version": "v1.0.2",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/0zd0/wordpress-stubs-generator.git",
-                "reference": "7415d340a0ec6b26d17861deda8c518795aa745b"
+                "reference": "b7c77e0be1a272e56fecec7926cbe437a92bdad1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/0zd0/wordpress-stubs-generator/zipball/7415d340a0ec6b26d17861deda8c518795aa745b",
-                "reference": "7415d340a0ec6b26d17861deda8c518795aa745b",
+                "url": "https://api.github.com/repos/0zd0/wordpress-stubs-generator/zipball/b7c77e0be1a272e56fecec7926cbe437a92bdad1",
+                "reference": "b7c77e0be1a272e56fecec7926cbe437a92bdad1",
                 "shasum": ""
             },
             "require": {
@@ -456,9 +456,9 @@
                 "static analysis"
             ],
             "support": {
-                "source": "https://github.com/0zd0/wordpress-stubs-generator/tree/v1.0.2"
+                "source": "https://github.com/0zd0/wordpress-stubs-generator/tree/v1.1.0"
             },
-            "time": "2024-12-29T18:16:31+00:00"
+            "time": "2024-12-29T22:56:39+00:00"
         },
         {
             "name": "phar-io/manifest",
