@@ -1,0 +1,14 @@
+{
+    "name": "Wordpress stubs",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "customizations": {
+        "jetbrains": {
+            "backend": "PhpStorm",
+            "plugins": []
+        }
+    },
+    "remoteUser": "root",
+    "postCreateCommand": "composer install"
+}
