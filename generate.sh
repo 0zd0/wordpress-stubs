@@ -24,6 +24,7 @@ fi
     --classes \
     --interfaces \
     --traits \
+    --constants \
     --out="$FILE"
 
 # Shim the global $wpdb declaration, since it's actually set up inside a function call.
