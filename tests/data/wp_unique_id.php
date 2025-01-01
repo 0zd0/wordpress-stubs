@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PhpStubs\WordPress\Core\Tests;
 
-use function wp_unique_id;
 use function PHPStan\Testing\assertType;
+use function wp_unique_id;
 
 assertType('numeric-string', wp_unique_id());
 assertType('numeric-string', wp_unique_id(''));

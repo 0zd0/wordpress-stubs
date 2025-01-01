@@ -11,7 +11,8 @@ use PhpParser\Node\Stmt\Expression;
 use PhpParser\Node\Stmt\Function_;
 use StubsGenerator\NodeVisitor;
 
-class ConstantsExtractor {
+class ConstantsExtractor
+{
     /** @var array<string> */
     private array $functionsWithConstants = [
         'wp_initial_constants',

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PhpStubs\WordPress\Core\Tests;
 
-use WP_Error;
-
 use function is_wp_error;
 use function PHPStan\Testing\assertType;
+
+use WP_Error;
 
 assertType('false', is_wp_error(Faker::string()));
 assertType('true', is_wp_error(new WP_Error()));

@@ -15,11 +15,10 @@ use phpDocumentor\Reflection\Types\Void_;
 use PhpParser\Comment\Doc;
 use PhpParser\ConstExprEvaluator;
 use PhpParser\Node;
-use PhpParser\NodeFinder;
-use PhpParser\Node\Identifier;
-use PhpParser\Node\Name;
 use PhpParser\Node\Expr\Exit_;
 use PhpParser\Node\Expr\FuncCall;
+use PhpParser\Node\Identifier;
+use PhpParser\Node\Name;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassLike;
@@ -29,6 +28,7 @@ use PhpParser\Node\Stmt\Function_;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Stmt\Return_ as Stmt_Return;
+use PhpParser\NodeFinder;
 use StubsGenerator\NodeVisitor;
 
 // phpcs:disable SlevomatCodingStandard.Functions.FunctionLength.FunctionLength,NeutronStandard.Functions.TypeHint.NoReturnType
@@ -305,7 +305,7 @@ class Visitor extends NodeVisitor
     }
 
     /**
-     * @param list<\PhpStubs\WordPress\Core\WordPressTag> $additions
+     * @param  list<\PhpStubs\WordPress\Core\WordPressTag> $additions
      * @return list<\PhpStubs\WordPress\Core\WordPressTag>
      */
     private function discoverInheritedArgs(DocBlock $docblock, array $additions): array

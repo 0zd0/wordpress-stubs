@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace PhpStubs\WordPress\Core\Tests;
 
-use wpdb;
 use function PHPStan\Testing\assertType;
+
+use wpdb;
 
 // wpdb::get_row()
 assertType('stdClass|null', wpdb::get_row());

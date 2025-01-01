@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace PhpStubs\WordPress\Core\Tests;
 
-use function wp_list_categories;
 use function PHPStan\Testing\assertType;
+use function wp_list_categories;
 
 // Default value of 1
 assertType('false|null', wp_list_categories());

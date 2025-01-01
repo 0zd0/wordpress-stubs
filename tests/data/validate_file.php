@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PhpStubs\WordPress\Core\Tests;
 
-use function validate_file;
 use function PHPStan\Testing\assertType;
+use function validate_file;
 
 $allowedFiles = Faker::array(Faker::string());
 

@@ -47,7 +47,7 @@ final class WordPressArg extends WithChildren
     }
 
     /**
-     * @param list<string> $strings
+     * @param  list<string> $strings
      * @return list<string>
      */
     private function formatChildless(array $strings, string $padding): array
@@ -57,8 +57,8 @@ final class WordPressArg extends WithChildren
     }
 
     /**
-     * @param list<string> $strings
-     * @param list<string> $childStrings
+     * @param  list<string> $strings
+     * @param  list<string> $childStrings
      * @return list<string>
      */
     private function formatArrayShape(array $strings, array $childStrings, string $padding): array
@@ -70,8 +70,8 @@ final class WordPressArg extends WithChildren
     }
 
     /**
-     * @param list<string> $strings
-     * @param list<string> $childStrings
+     * @param  list<string> $strings
+     * @param  list<string> $childStrings
      * @return list<string>
      */
     private function formatArrayWithoutShape(array $strings, array $childStrings, string $padding): array

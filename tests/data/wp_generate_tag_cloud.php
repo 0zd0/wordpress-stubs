@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PhpStubs\WordPress\Core\Tests;
 
-use function wp_generate_tag_cloud;
 use function PHPStan\Testing\assertType;
+use function wp_generate_tag_cloud;
 
 $tags = Faker::array(Faker::wpTerm());
 

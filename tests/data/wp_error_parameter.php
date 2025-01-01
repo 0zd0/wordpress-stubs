@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpStubs\WordPress\Core\Tests;
 
+use function PHPStan\Testing\assertType;
 use function wp_clear_scheduled_hook;
 use function wp_insert_attachment;
 use function wp_insert_category;
@@ -17,7 +18,6 @@ use function wp_unschedule_event;
 use function wp_unschedule_hook;
 use function wp_update_comment;
 use function wp_update_post;
-use function PHPStan\Testing\assertType;
 
 /*
  * wp_insert_link()

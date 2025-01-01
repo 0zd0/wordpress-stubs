@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace PhpStubs\WordPress\Core\Tests;
 
-use function wp_list_bookmarks;
 use function PHPStan\Testing\assertType;
+use function wp_list_bookmarks;
 
 // Default value of true
 assertType('null', wp_list_bookmarks());

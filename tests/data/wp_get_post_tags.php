@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PhpStubs\WordPress\Core\Tests;
 
-use function wp_get_post_tags;
 use function PHPStan\Testing\assertType;
+use function wp_get_post_tags;
 
 $postID = 123;
 

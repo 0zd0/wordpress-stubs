@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace PhpStubs\WordPress\Core\Tests;
 
-use function term_exists;
-use function tag_exists;
 use function PHPStan\Testing\assertType;
+use function tag_exists;
+use function term_exists;
 
 $term = $_GET['term'] ?? 123;
 $taxo = $_GET['taxo'] ?? 'category';

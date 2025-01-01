@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace PhpStubs\WordPress\Core\Tests;
 
-use function wp_list_pages;
 use function PHPStan\Testing\assertType;
+use function wp_list_pages;
 
 // Default value of true
 assertType('null', wp_list_pages());

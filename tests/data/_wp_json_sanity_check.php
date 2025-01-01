@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PhpStubs\WordPress\Core\Tests;
 
-use function PHPStan\Testing\assertType;
 use function _wp_json_sanity_check;
+use function PHPStan\Testing\assertType;
 
 assertType('null', _wp_json_sanity_check(null, 1));
 assertType('bool', _wp_json_sanity_check(Faker::bool(), 1));

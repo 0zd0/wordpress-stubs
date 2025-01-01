@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PhpStubs\WordPress\Core\Tests;
 
-use function wp_die;
 use function PHPStan\Testing\assertType;
+use function wp_die;
 
 // default (['exit' => true])
 assertType('never', wp_die());

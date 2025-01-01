@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace PhpStubs\WordPress\Core\Tests;
 
-use function wp_get_archives;
 use function PHPStan\Testing\assertType;
+use function wp_get_archives;
 
 // Default value of true
 assertType('null', wp_get_archives());

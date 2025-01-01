@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PhpStubs\WordPress\Core\Tests;
 
-use function wp_is_numeric_array;
 use function PHPStan\Testing\assertType;
+use function wp_is_numeric_array;
 
 // No array
 assertType('false', wp_is_numeric_array(Faker::string()));
