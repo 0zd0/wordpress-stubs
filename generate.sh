@@ -3,11 +3,23 @@
 HEADER=$'/**\n * Generated stub declarations for WordPress.\n * @see https://wordpress.org\n * @see https://github.com/0zd0/wordpress-stubs\n */'
 
 FILE="wordpress-stubs.php"
+DIR=$(dirname "$0")
+
+IGNORE_HOOKS=(
+"manage_{\$post->post_type}_posts_custom_column"
+)
+IGNORE_HOOKS_STRING=$(IFS=,; echo "${IGNORE_HOOKS[*]}")
 
 set -e
 
 test -f "$FILE"
 test -d "source/wordpress"
+
+"$DIR/vendor/bin/generate-hooks" \
+    --input=source/wordpress \
+    --input=source/overrides \
+    --output=hooks \
+    --ignore-hooks="$IGNORE_HOOKS_STRING"
 
 # Download dependencies
 if [ ! -d vendor ]; then
@@ -15,7 +27,7 @@ if [ ! -d vendor ]; then
 fi
 
 # Exclude globals.
-"$(dirname "$0")/vendor/bin/generate-stubs" \
+"$DIR/vendor/bin/generate-stubs" \
     --force \
     --finder=finder.php \
     --visitor=visitor.php \

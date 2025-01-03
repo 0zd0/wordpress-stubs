@@ -15,7 +15,8 @@
         "phpdocumentor/reflection-docblock": "^5.6",
         "phpunit/phpunit": "^9.6",
         "phpstan/phpstan": "^1.10",
-        "friendsofphp/php-cs-fixer": "^3.66"
+        "friendsofphp/php-cs-fixer": "^3.66",
+        "onepix/wordpress-hooks-stub-generator": "^2.0"
     },
     "minimum-stability": "stable",
     "autoload-dev": {
@@ -50,7 +51,8 @@
         "cs:fix": "php-cs-fixer fix",
         "test:phpstan": "phpstan analyze",
         "test:phpunit": "phpunit",
-        "generate": "./generate.sh"
+        "generate": "bash ./generate.sh",
+        "generate-latest": "bash ./release-latest-versions.sh"
     },
     "scripts-descriptions": {
         "cleanup": "Remove all ignored files."

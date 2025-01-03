@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93ca32bbf2f09ac100da7c31044a93c1",
+    "content-hash": "c5649e81b27bcec4724bbde9e74217bd",
     "packages": [],
     "packages-dev": [
         {
@@ -413,6 +413,56 @@
             "time": "2022-12-30T00:23:10+00:00"
         },
         {
+            "name": "erusev/parsedown",
+            "version": "1.7.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erusev/parsedown.git",
+                "reference": "cb17b6477dfff935958ba01325f2e8a2bfa6dab3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/cb17b6477dfff935958ba01325f2e8a2bfa6dab3",
+                "reference": "cb17b6477dfff935958ba01325f2e8a2bfa6dab3",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.35"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Parsedown": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emanuil Rusev",
+                    "email": "hello@erusev.com",
+                    "homepage": "http://erusev.com"
+                }
+            ],
+            "description": "Parser for Markdown.",
+            "homepage": "http://parsedown.org",
+            "keywords": [
+                "markdown",
+                "parser"
+            ],
+            "support": {
+                "issues": "https://github.com/erusev/parsedown/issues",
+                "source": "https://github.com/erusev/parsedown/tree/1.7.x"
+            },
+            "time": "2019-12-30T22:54:17+00:00"
+        },
+        {
             "name": "evenement/evenement",
             "version": "v3.0.2",
             "source": {
@@ -740,6 +790,82 @@
                 "source": "https://github.com/nikic/PHP-Parser/tree/v5.4.0"
             },
             "time": "2024-12-30T11:07:19+00:00"
+        },
+        {
+            "name": "onepix/wordpress-hooks-stub-generator",
+            "version": "v2.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/0zd0/wordpress-hooks-stub-generator.git",
+                "reference": "256e5c26d84c47ce6cb07f931075a78c1f383d63"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/0zd0/wordpress-hooks-stub-generator/zipball/256e5c26d84c47ce6cb07f931075a78c1f383d63",
+                "reference": "256e5c26d84c47ce6cb07f931075a78c1f383d63",
+                "shasum": ""
+            },
+            "require": {
+                "erusev/parsedown": "1.7.4",
+                "ext-dom": "*",
+                "ext-libxml": "*",
+                "nikic/php-parser": "^5.4.0",
+                "php": ">=8.1",
+                "phpdocumentor/reflection-docblock": "^5.6.1",
+                "symfony/console": "^6.4",
+                "symfony/filesystem": "^6.4",
+                "symfony/finder": "^6.4"
+            },
+            "replace": {
+                "wp-hooks/generator": "*"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.65",
+                "mikey179/vfsstream": "^v1.6.12",
+                "opis/json-schema": "2.3.0",
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^9.6"
+            },
+            "bin": [
+                "bin/generate-hooks"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Onepix\\WordPressHooksStubGenerator\\": "src/",
+                    "Onepix\\WordPressHooksStubGenerator\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "John Blackbourn",
+                    "homepage": "https://johnblackbourn.com/"
+                },
+                {
+                    "name": "Onepix"
+                }
+            ],
+            "description": "Generates a JSON representation of the WordPress actions and filters in your code",
+            "keywords": [
+                "PHPStan",
+                "psalm",
+                "static analysis",
+                "wordpress"
+            ],
+            "support": {
+                "source": "https://github.com/0zd0/wordpress-hooks-stub-generator/tree/v2.1.3"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/johnbillion",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-01-03T09:24:08+00:00"
         },
         {
             "name": "onepix/wordpress-stubs-generator",

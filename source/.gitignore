@@ -1,3 +1,5 @@
 *
 !/.gitignore
 !/composer.json
+!/overrides/
+!/overrides/**
