@@ -44,6 +44,12 @@ Update your Psalm config to include this section.
 </stubs>
 ```
 
+```xml
+<hooks>
+    <directory name="vendor/onepix/wordpress-stubs/hooks" recursive="true"/>
+</hooks>
+```
+
 Furthermore ensure WordPress core is _not_ included in `<projectFiles>`.
 
 ### Usage in Intellisense
