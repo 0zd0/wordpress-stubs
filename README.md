@@ -1,7 +1,7 @@
 # WordPress Stubs
 
 It provides stub declarations for [WordPress](https://wordpress.org/)
-core functions, classes and interfaces, globals, hooks.
+core functions, classes, interfaces, globals, hooks.
 These stubs can help plugin and theme developers leverage static analysis tools
 like [PHPStan](https://github.com/phpstan/phpstan).
 
