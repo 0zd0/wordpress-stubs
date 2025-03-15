@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y \
     net-tools \
     gettext \
     gnupg2 \
+    wget \
+    jq \
    && docker-php-ext-install zip gettext \
    && rm -rf /var/lib/apt/lists/*
 

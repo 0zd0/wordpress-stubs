@@ -2,7 +2,7 @@
 
 HEADER=$'/**\n * Generated stub declarations for WordPress.\n * @see https://wordpress.org\n * @see https://github.com/0zd0/wordpress-stubs\n */'
 
-FILE="wordpress-stubs.php"
+FILE="wordpress-stubs.phpstub"
 DIR=$(dirname "$0")
 
 IGNORE_HOOKS=(
