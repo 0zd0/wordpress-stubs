@@ -20,7 +20,7 @@ Require this package as a development dependency with [Composer](https://getcomp
 composer require --dev onepix/wordpress-stubs
 ```
 
-Alternatively you may download `wordpress-stubs.php` directly.
+Alternatively you may download `wordpress-stubs.phpstub` directly.
 
 ### Usage with PHPStan
 
@@ -40,7 +40,7 @@ Update your Psalm config to include this section.
 
 ```xml
 <stubs>
-    <file name="vendor/onepix/wordpress-stubs/wordpress-stubs.php" />
+    <file name="vendor/onepix/wordpress-stubs/wordpress-stubs.phpstub" />
 </stubs>
 ```
 
@@ -73,4 +73,4 @@ This package is versioned to match the WordPress version from which the stubs ar
 1. Run `composer update`
 1. And run `./generate.sh`
 
-The `wordpress-stubs.php` file should now be updated.
+The `wordpress-stubs.phpstub` file should now be updated.
