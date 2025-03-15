@@ -63664,18 +63664,16 @@ namespace {
         {
         }
         /**
-         * Ensures internal accounting is maintained for HTML semantic rules while
-         * the underlying Tag Processor class is seeking to a bookmark.
+         * Finds the next token in the HTML document.
          *
          * This doesn't currently have a way to represent non-tags and doesn't process
          * semantic rules for text nodes. For access to the raw tokens consider using
          * WP_HTML_Tag_Processor instead.
          *
          * @since 6.5.0 Added for internal support; do not use.
+         * @since 6.7.2 Refactored so subclasses may extend.
          *
-         * @access private
-         *
-         * @return bool
+         * @return bool Whether a token was parsed.
          */
         public function next_token(): bool
         {
