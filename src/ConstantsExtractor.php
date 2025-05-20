@@ -16,6 +16,11 @@ class ConstantsExtractor
     /** @var array<string> */
     private array $functionsWithConstants = [
         'wp_initial_constants',
+        'wp_cookie_constants',
+        'wp_ssl_constants',
+        'wp_functionality_constants',
+        'wp_templating_constants',
+        'wp_plugin_directory_constants',
     ];
 
     private NodeVisitor $visitor;

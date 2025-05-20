@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 return \StubsGenerator\Finder::create()
     ->in('source/wordpress')
+    ->in('source/overrides')
     // Shim for load-styles.php and load-scripts.php.
     ->notPath('wp-admin/includes/noop.php')
     // This file is not included by WordPress.

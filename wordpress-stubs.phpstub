@@ -79007,25 +79007,556 @@ namespace Avifinfo {
     }
 }
 namespace {
-    /**
-     * Front to the WordPress application. This file doesn't do anything, but loads
-     * wp-blog-header.php which does and tells WordPress to load the theme.
-     *
-     * @package WordPress
-     */
-    /**
-     * Tells WordPress to load the WordPress theme and output it.
-     *
-     * @var bool
-     */
-    \define('WP_USE_THEMES', \true);
-    /**
-     * Confirms that the activation key that is sent in an email after a user signs
-     * up for a new site matches the key for that user and then displays confirmation.
-     *
-     * @package WordPress
-     */
+    // ./wp-admin/includes/class-ftp.php
+    \define('CRLF', "\r\n");
+    \define('FTP_AUTOASCII', -1);
+    \define('FTP_FORCE', \true);
+    \define('FTP_OS_Unix', 'u');
+    \define('FTP_OS_Windows', 'w');
+    \define('FTP_OS_Mac', 'm');
+    // ./wp-admin/includes/plugin.php
+    \define('WP_SANDBOX_SCRAPING', \true);
+    \define('WP_UNINSTALL_PLUGIN', 'file');
+    // ./wp-admin/includes/class-pclzip.php
+    \define('PCLZIP_READ_BLOCK_SIZE', 2048);
+    \define('PCLZIP_SEPARATOR', ',');
+    \define('PCLZIP_ERROR_EXTERNAL', 0);
+    \define('PCLZIP_TEMPORARY_DIR', '');
+    \define('PCLZIP_TEMPORARY_FILE_RATIO', 0.47);
+    \define('PCLZIP_ERR_USER_ABORTED', 2);
+    \define('PCLZIP_ERR_NO_ERROR', 0);
+    \define('PCLZIP_ERR_WRITE_OPEN_FAIL', -1);
+    \define('PCLZIP_ERR_READ_OPEN_FAIL', -2);
+    \define('PCLZIP_ERR_INVALID_PARAMETER', -3);
+    \define('PCLZIP_ERR_MISSING_FILE', -4);
+    \define('PCLZIP_ERR_FILENAME_TOO_LONG', -5);
+    \define('PCLZIP_ERR_INVALID_ZIP', -6);
+    \define('PCLZIP_ERR_BAD_EXTRACTED_FILE', -7);
+    \define('PCLZIP_ERR_DIR_CREATE_FAIL', -8);
+    \define('PCLZIP_ERR_BAD_EXTENSION', -9);
+    \define('PCLZIP_ERR_BAD_FORMAT', -10);
+    \define('PCLZIP_ERR_DELETE_FILE_FAIL', -11);
+    \define('PCLZIP_ERR_RENAME_FILE_FAIL', -12);
+    \define('PCLZIP_ERR_BAD_CHECKSUM', -13);
+    \define('PCLZIP_ERR_INVALID_ARCHIVE_ZIP', -14);
+    \define('PCLZIP_ERR_MISSING_OPTION_VALUE', -15);
+    \define('PCLZIP_ERR_INVALID_OPTION_VALUE', -16);
+    \define('PCLZIP_ERR_ALREADY_A_DIRECTORY', -17);
+    \define('PCLZIP_ERR_UNSUPPORTED_COMPRESSION', -18);
+    \define('PCLZIP_ERR_UNSUPPORTED_ENCRYPTION', -19);
+    \define('PCLZIP_ERR_INVALID_ATTRIBUTE_VALUE', -20);
+    \define('PCLZIP_ERR_DIRECTORY_RESTRICTION', -21);
+    \define('PCLZIP_OPT_PATH', 77001);
+    \define('PCLZIP_OPT_ADD_PATH', 77002);
+    \define('PCLZIP_OPT_REMOVE_PATH', 77003);
+    \define('PCLZIP_OPT_REMOVE_ALL_PATH', 77004);
+    \define('PCLZIP_OPT_SET_CHMOD', 77005);
+    \define('PCLZIP_OPT_EXTRACT_AS_STRING', 77006);
+    \define('PCLZIP_OPT_NO_COMPRESSION', 77007);
+    \define('PCLZIP_OPT_BY_NAME', 77008);
+    \define('PCLZIP_OPT_BY_INDEX', 77009);
+    \define('PCLZIP_OPT_BY_EREG', 77010);
+    \define('PCLZIP_OPT_BY_PREG', 77011);
+    \define('PCLZIP_OPT_COMMENT', 77012);
+    \define('PCLZIP_OPT_ADD_COMMENT', 77013);
+    \define('PCLZIP_OPT_PREPEND_COMMENT', 77014);
+    \define('PCLZIP_OPT_EXTRACT_IN_OUTPUT', 77015);
+    \define('PCLZIP_OPT_REPLACE_NEWER', 77016);
+    \define('PCLZIP_OPT_STOP_ON_ERROR', 77017);
+    \define('PCLZIP_OPT_CRYPT', 77018);
+    \define('PCLZIP_OPT_EXTRACT_DIR_RESTRICTION', 77019);
+    \define('PCLZIP_OPT_TEMP_FILE_THRESHOLD', 77020);
+    \define('PCLZIP_OPT_ADD_TEMP_FILE_THRESHOLD', 77020);
+    \define('PCLZIP_OPT_TEMP_FILE_ON', 77021);
+    \define('PCLZIP_OPT_ADD_TEMP_FILE_ON', 77021);
+    \define('PCLZIP_OPT_TEMP_FILE_OFF', 77022);
+    \define('PCLZIP_OPT_ADD_TEMP_FILE_OFF', 77022);
+    \define('PCLZIP_ATT_FILE_NAME', 79001);
+    \define('PCLZIP_ATT_FILE_NEW_SHORT_NAME', 79002);
+    \define('PCLZIP_ATT_FILE_NEW_FULL_NAME', 79003);
+    \define('PCLZIP_ATT_FILE_MTIME', 79004);
+    \define('PCLZIP_ATT_FILE_CONTENT', 79005);
+    \define('PCLZIP_ATT_FILE_COMMENT', 79006);
+    \define('PCLZIP_CB_PRE_EXTRACT', 78001);
+    \define('PCLZIP_CB_POST_EXTRACT', 78002);
+    \define('PCLZIP_CB_PRE_ADD', 78003);
+    \define('PCLZIP_CB_POST_ADD', 78004);
+    \define('PCLZIP_CB_PRE_LIST', 78005);
+    \define('PCLZIP_CB_POST_LIST', 78006);
+    \define('PCLZIP_CB_PRE_DELETE', 78007);
+    \define('PCLZIP_CB_POST_DELETE', 78008);
+    // ./wp-admin/includes/file.php
+    \define('FS_CONNECT_TIMEOUT', 30);
+    \define('FS_TIMEOUT', 30);
+    \define('FS_CHMOD_DIR', 0777 | 0755);
+    \define('FS_CHMOD_FILE', 0777 | 0644);
+    // ./wp-admin/includes/network.php
+    \define('MULTISITE', \true);
+    \define('SUBDOMAIN_INSTALL', '');
+    \define('DOMAIN_CURRENT_SITE', '');
+    \define('PATH_CURRENT_SITE', '');
+    \define('SITE_ID_CURRENT_SITE', 1);
+    \define('BLOG_ID_CURRENT_SITE', 1);
+    // ./wp-admin/includes/export.php
+    \define('WXR_VERSION', '1.2');
+    // ./wp-admin/customize.php
+    \define('IFRAME_REQUEST', \true);
+    // ./wp-admin/admin.php
+    \define('WP_ADMIN', \true);
+    \define('WP_NETWORK_ADMIN', \false);
+    \define('WP_USER_ADMIN', \false);
+    \define('WP_BLOG_ADMIN', \true);
+    \define('WP_LOAD_IMPORTERS', \true);
+    \define('WP_IMPORTING', \true);
+    // ./wp-admin/async-upload.php
+    \define('DOING_AJAX', \true);
+    // ./wp-admin/maint/repair.php
+    \define('WP_REPAIRING', \true);
+    // ./wp-admin/network.php
+    \define('WP_INSTALLING_NETWORK', \true);
+    // ./wp-admin/user-edit.php
+    \define('IS_PROFILE_PAGE', \true);
+    // ./wp-config.php
+    \define('DB_NAME', '');
+    \define('DB_USER', '');
+    \define('DB_PASSWORD', '');
+    \define('DB_HOST', 'localhost');
+    \define('DB_CHARSET', 'utf8');
+    \define('DB_COLLATE', '');
+    \define('AUTH_KEY', '');
+    \define('SECURE_AUTH_KEY', '');
+    \define('LOGGED_IN_KEY', '');
+    \define('NONCE_KEY', '');
+    \define('AUTH_SALT', '');
+    \define('SECURE_AUTH_SALT', '');
+    \define('LOGGED_IN_SALT', '');
+    \define('NONCE_SALT', '');
+    // ./wp-mail.php
+    \define('WP_MAIL_INTERVAL', 300);
+    // ./wp-cron.php
+    \define('DOING_CRON', \true);
+    // ./xmlrpc.php
+    \define('XMLRPC_REQUEST', \true);
+    // ./wp-activate.php
     \define('WP_INSTALLING', \true);
+    // ./wp-settings.php
+    \define('WPINC', 'wp-includes');
+    // ./wp-load.php
+    \define('ABSPATH', '/');
+    // ./wp-includes/load.php
+    \define('WP_LANG_DIR', 'wp-content/languages');
+    \define('LANGDIR', 'wp-content/languages');
+    // ./wp-includes/pomo/po.php
+    \define('PO_MAX_LINE_LEN', 79);
+    // ./wp-includes/class-wp-http-proxy.php
+    \define('WP_PROXY_HOST', '127.0.0.1');
+    \define('WP_PROXY_PORT', '8080');
+    \define('WP_PROXY_BYPASS_HOSTS', 'localhost, www.example.com, *.wordpress.org');
+    // ./wp-includes/ms-default-constants.php
+    \define('UPLOADBLOGSDIR', 'wp-content/blogs.dir');
+    \define('UPLOADS', 'wp-content/blogs.dir/0/files/');
+    \define('BLOGUPLOADDIR', 'wp-content/blogs.dir/0/files/');
+    \define('WPMU_SENDFILE', \false);
+    \define('WPMU_ACCEL_REDIRECT', \false);
+    \define('VHOST', 'no');
+    // ./wp-includes/theme.php
+    \define('NO_HEADER_TEXT', \false);
+    \define('HEADER_IMAGE_WIDTH', 1280);
+    \define('HEADER_IMAGE_HEIGHT', 768);
+    \define('HEADER_TEXTCOLOR', 'black');
+    \define('HEADER_IMAGE', 'image,.jpg');
+    \define('BACKGROUND_COLOR', 'white');
+    \define('BACKGROUND_IMAGE', 'background.jpg');
+    // ./wp-includes/default-constants.php
+    \define('KB_IN_BYTES', 1024);
+    \define('MB_IN_BYTES', 1024 * \KB_IN_BYTES);
+    \define('GB_IN_BYTES', 1024 * \MB_IN_BYTES);
+    \define('TB_IN_BYTES', 1024 * \GB_IN_BYTES);
+    \define('WP_START_TIMESTAMP', \microtime(\true));
+    \define('WP_MEMORY_LIMIT', '40M');
+    \define('WP_MAX_MEMORY_LIMIT', '256M');
+    \define('WP_CONTENT_DIR', './wp-content');
+    \define('WP_DEBUG', \false);
+    \define('WP_DEBUG_DISPLAY', \true);
+    \define('WP_DEBUG_LOG', \false);
+    \define('WP_CACHE', \false);
+    \define('SCRIPT_DEBUG', \false);
+    \define('MEDIA_TRASH', \false);
+    \define('SHORTINIT', \false);
+    \define('WP_FEATURE_BETTER_PASSWORDS', \true);
+    \define('MINUTE_IN_SECONDS', 60);
+    \define('HOUR_IN_SECONDS', 60 * \MINUTE_IN_SECONDS);
+    \define('DAY_IN_SECONDS', 24 * \HOUR_IN_SECONDS);
+    \define('WEEK_IN_SECONDS', 7 * \DAY_IN_SECONDS);
+    \define('MONTH_IN_SECONDS', 30 * \DAY_IN_SECONDS);
+    \define('YEAR_IN_SECONDS', 365 * \DAY_IN_SECONDS);
+    \define('WP_CONTENT_URL', 'https://localhost/wp-content');
+    \define('WP_PLUGIN_DIR', \WP_CONTENT_DIR . '/plugins');
+    \define('WP_PLUGIN_URL', \WP_CONTENT_URL . '/plugins');
+    \define('PLUGINDIR', 'wp-content/plugins');
+    \define('WPMU_PLUGIN_DIR', \WP_CONTENT_DIR . '/mu-plugins');
+    \define('WPMU_PLUGIN_URL', \WP_CONTENT_URL . '/mu-plugins');
+    \define('COOKIEHASH', '');
+    \define('USER_COOKIE', 'wordpressuser_' . \COOKIEHASH);
+    \define('PASS_COOKIE', 'wordpresspass_' . \COOKIEHASH);
+    \define('AUTH_COOKIE', 'wordpress_' . \COOKIEHASH);
+    \define('SECURE_AUTH_COOKIE', 'wordpress_sec_' . \COOKIEHASH);
+    \define('LOGGED_IN_COOKIE', 'wordpress_logged_in_' . \COOKIEHASH);
+    \define('TEST_COOKIE', 'wordpress_test_cookie');
+    \define('COOKIEPATH', '/');
+    \define('SITECOOKIEPATH', '/');
+    \define('ADMIN_COOKIE_PATH', \SITECOOKIEPATH . 'wp-admin');
+    \define('PLUGINS_COOKIE_PATH', '/wp-content/plugins');
+    \define('COOKIE_DOMAIN', \false);
+    \define('RECOVERY_MODE_COOKIE', 'wordpress_rec_' . \COOKIEHASH);
+    \define('FORCE_SSL_ADMIN', \true);
+    \define('AUTOSAVE_INTERVAL', 60);
+    \define('EMPTY_TRASH_DAYS', 30);
+    \define('WP_POST_REVISIONS', \true);
+    \define('WP_CRON_LOCK_TIMEOUT', 60);
+    \define('TEMPLATEPATH', '/wp-content/themes/default');
+    \define('STYLESHEETPATH', '/wp-content/themes/default');
+    \define('WP_DEFAULT_THEME', 'twentytwenty');
+    // ./wp-includes/kses.php
+    \define('CUSTOM_TAGS', \false);
+    // ./wp-includes/wp-db.php
+    \define('EZSQL_VERSION', 'WP1.25');
+    \define('OBJECT', 'OBJECT');
+    \define('OBJECT_K', 'OBJECT_K');
+    \define('ARRAY_A', 'ARRAY_A');
+    \define('ARRAY_N', 'ARRAY_N');
+    // ./wp-includes/class-simplepie.php
+    \define('SIMPLEPIE_NAME', 'SimplePie');
+    \define('SIMPLEPIE_VERSION', '1.3.1');
+    \define('SIMPLEPIE_BUILD', '20200101000000');
+    \define('SIMPLEPIE_URL', 'http://simplepie.org');
+    \define('SIMPLEPIE_USERAGENT', 'SimplePie/1.3.1 (Feed Parser; http://simplepie.org; Allow like Gecko) Build/20200101000000');
+    \define('SIMPLEPIE_LINKBACK', '');
+    \define('SIMPLEPIE_LOCATOR_NONE', 0);
+    \define('SIMPLEPIE_LOCATOR_AUTODISCOVERY', 1);
+    \define('SIMPLEPIE_LOCATOR_LOCAL_EXTENSION', 2);
+    \define('SIMPLEPIE_LOCATOR_LOCAL_BODY', 4);
+    \define('SIMPLEPIE_LOCATOR_REMOTE_EXTENSION', 8);
+    \define('SIMPLEPIE_LOCATOR_REMOTE_BODY', 16);
+    \define('SIMPLEPIE_LOCATOR_ALL', 31);
+    \define('SIMPLEPIE_TYPE_NONE', 0);
+    \define('SIMPLEPIE_TYPE_RSS_090', 1);
+    \define('SIMPLEPIE_TYPE_RSS_091_NETSCAPE', 2);
+    \define('SIMPLEPIE_TYPE_RSS_091_USERLAND', 4);
+    \define('SIMPLEPIE_TYPE_RSS_091', 6);
+    \define('SIMPLEPIE_TYPE_RSS_092', 8);
+    \define('SIMPLEPIE_TYPE_RSS_093', 16);
+    \define('SIMPLEPIE_TYPE_RSS_094', 32);
+    \define('SIMPLEPIE_TYPE_RSS_10', 64);
+    \define('SIMPLEPIE_TYPE_RSS_20', 128);
+    \define('SIMPLEPIE_TYPE_RSS_RDF', 65);
+    \define('SIMPLEPIE_TYPE_RSS_SYNDICATION', 190);
+    \define('SIMPLEPIE_TYPE_RSS_ALL', 255);
+    \define('SIMPLEPIE_TYPE_ATOM_03', 256);
+    \define('SIMPLEPIE_TYPE_ATOM_10', 512);
+    \define('SIMPLEPIE_TYPE_ATOM_ALL', 768);
+    \define('SIMPLEPIE_TYPE_ALL', 1023);
+    \define('SIMPLEPIE_CONSTRUCT_NONE', 0);
+    \define('SIMPLEPIE_CONSTRUCT_TEXT', 1);
+    \define('SIMPLEPIE_CONSTRUCT_HTML', 2);
+    \define('SIMPLEPIE_CONSTRUCT_XHTML', 4);
+    \define('SIMPLEPIE_CONSTRUCT_BASE64', 8);
+    \define('SIMPLEPIE_CONSTRUCT_IRI', 16);
+    \define('SIMPLEPIE_CONSTRUCT_MAYBE_HTML', 32);
+    \define('SIMPLEPIE_CONSTRUCT_ALL', 63);
+    \define('SIMPLEPIE_SAME_CASE', 1);
+    \define('SIMPLEPIE_LOWERCASE', 2);
+    \define('SIMPLEPIE_UPPERCASE', 4);
+    \define('SIMPLEPIE_PCRE_HTML_ATTRIBUTE', '((?:[\x09\x0A\x0B\x0C\x0D\x20]+[^\x09\x0A\x0B\x0C\x0D\x20\x2F\x3E][^\x09\x0A\x0B\x0C\x0D\x20\x2F\x3D\x3E]*(?:[\x09\x0A\x0B\x0C\x0D\x20]*=[\x09\x0A\x0B\x0C\x0D\x20]*(?:"(?:[^"]* )"|\'(?:[^\']* )\'|(?:[^\x09\x0A\x0B\x0C\x0D\x20\x22\x27\x3E][^\x09\x0A\x0B\x0C\x0D\x20\x3E]* )? ) )? )* )[\x09\x0A\x0B\x0C\x0D\x20]*');
+    \define('SIMPLEPIE_PCRE_XML_ATTRIBUTE', '((?:\s+(?:(?:[^\s:]+: )?[^\s:]+ )\s*=\s*(?:"(?:[^"]* )"|\'(?:[^\']* )\' ) )* )\s*');
+    \define('SIMPLEPIE_NAMESPACE_XML', 'http://www.w3.org/XML/1998/namespace');
+    \define('SIMPLEPIE_NAMESPACE_ATOM_10', 'http://www.w3.org/2005/Atom');
+    \define('SIMPLEPIE_NAMESPACE_ATOM_03', 'http://purl.org/atom/ns#');
+    \define('SIMPLEPIE_NAMESPACE_RDF', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#');
+    \define('SIMPLEPIE_NAMESPACE_RSS_090', 'http://my.netscape.com/rdf/simple/0.9/');
+    \define('SIMPLEPIE_NAMESPACE_RSS_10', 'http://purl.org/rss/1.0/');
+    \define('SIMPLEPIE_NAMESPACE_RSS_10_MODULES_CONTENT', 'http://purl.org/rss/1.0/modules/content/');
+    \define('SIMPLEPIE_NAMESPACE_RSS_20', '');
+    \define('SIMPLEPIE_NAMESPACE_DC_10', 'http://purl.org/dc/elements/1.0/');
+    \define('SIMPLEPIE_NAMESPACE_DC_11', 'http://purl.org/dc/elements/1.1/');
+    \define('SIMPLEPIE_NAMESPACE_W3C_BASIC_GEO', 'http://www.w3.org/2003/01/geo/wgs84_pos#');
+    \define('SIMPLEPIE_NAMESPACE_GEORSS', 'http://www.georss.org/georss');
+    \define('SIMPLEPIE_NAMESPACE_MEDIARSS', 'http://search.yahoo.com/mrss/');
+    \define('SIMPLEPIE_NAMESPACE_MEDIARSS_WRONG', 'http://search.yahoo.com/mrss');
+    \define('SIMPLEPIE_NAMESPACE_MEDIARSS_WRONG2', 'http://video.search.yahoo.com/mrss');
+    \define('SIMPLEPIE_NAMESPACE_MEDIARSS_WRONG3', 'http://video.search.yahoo.com/mrss/');
+    \define('SIMPLEPIE_NAMESPACE_MEDIARSS_WRONG4', 'http://www.rssboard.org/media-rss');
+    \define('SIMPLEPIE_NAMESPACE_MEDIARSS_WRONG5', 'http://www.rssboard.org/media-rss/');
+    \define('SIMPLEPIE_NAMESPACE_ITUNES', 'http://www.itunes.com/dtds/podcast-1.0.dtd');
+    \define('SIMPLEPIE_NAMESPACE_XHTML', 'http://www.w3.org/1999/xhtml');
+    \define('SIMPLEPIE_IANA_LINK_RELATIONS_REGISTRY', 'http://www.iana.org/assignments/relation/');
+    \define('SIMPLEPIE_FILE_SOURCE_NONE', 0);
+    \define('SIMPLEPIE_FILE_SOURCE_REMOTE', 1);
+    \define('SIMPLEPIE_FILE_SOURCE_LOCAL', 2);
+    \define('SIMPLEPIE_FILE_SOURCE_FSOCKOPEN', 4);
+    \define('SIMPLEPIE_FILE_SOURCE_CURL', 8);
+    \define('SIMPLEPIE_FILE_SOURCE_FILE_GET_CONTENTS', 16);
+    // ./wp-includes/comment-template.php
+    \define('COMMENTS_TEMPLATE', \true);
+    // ./wp-includes/class-wp-customize-manager.php
+    \define('DOING_AUTOSAVE', \true);
+    // ./wp-includes/script-loader.php
+    \define('CONCATENATE_SCRIPTS', \false);
+    \define('COMPRESS_SCRIPTS', \false);
+    \define('COMPRESS_CSS', \false);
+    \define('ENFORCE_GZIP', \true);
+    // ./wp-includes/rest-api.php
+    \define('REST_API_VERSION', '2.0');
+    \define('REST_REQUEST', \true);
+    // ./wp-includes/rss.php
+    \define('RSS', 'RSS');
+    \define('ATOM', 'Atom');
+    \define('MAGPIE_USER_AGENT', 'WordPress/1.0.0');
+    \define('MAGPIE_INITALIZED', 1);
+    \define('MAGPIE_CACHE_ON', 1);
+    \define('MAGPIE_CACHE_DIR', './cache');
+    \define('MAGPIE_CACHE_AGE', 3600);
+    \define('MAGPIE_CACHE_FRESH_ONLY', 0);
+    \define('MAGPIE_DEBUG', 0);
+    \define('MAGPIE_FETCH_TIME_OUT', 2);
+    \define('MAGPIE_USE_GZIP', \true);
+    // ./wp-includes/ID3/module.audio.mp3.php
+    \define('GETID3_MP3_VALID_CHECK_FRAMES', 35);
+    // ./wp-includes/ID3/getid3.php
+    \define('GETID3_OS_ISWINDOWS', \false);
+    \define('GETID3_INCLUDEPATH', '/');
+    \define('IMG_JPG', \IMAGETYPE_JPEG);
+    \define('GETID3_TEMP_DIR', '/tmp');
+    \define('GETID3_HELPERAPPSDIR', '/');
+    // ./wp-includes/ID3/module.audio-video.flv.php
+    \define('GETID3_FLV_TAG_AUDIO', 8);
+    \define('GETID3_FLV_TAG_VIDEO', 9);
+    \define('GETID3_FLV_TAG_META', 18);
+    \define('GETID3_FLV_VIDEO_H263', 2);
+    \define('GETID3_FLV_VIDEO_SCREEN', 3);
+    \define('GETID3_FLV_VIDEO_VP6FLV', 4);
+    \define('GETID3_FLV_VIDEO_VP6FLV_ALPHA', 5);
+    \define('GETID3_FLV_VIDEO_SCREENV2', 6);
+    \define('GETID3_FLV_VIDEO_H264', 7);
+    \define('H264_AVC_SEQUENCE_HEADER', 0);
+    \define('H264_PROFILE_BASELINE', 66);
+    \define('H264_PROFILE_MAIN', 77);
+    \define('H264_PROFILE_EXTENDED', 88);
+    \define('H264_PROFILE_HIGH', 100);
+    \define('H264_PROFILE_HIGH10', 110);
+    \define('H264_PROFILE_HIGH422', 122);
+    \define('H264_PROFILE_HIGH444', 144);
+    \define('H264_PROFILE_HIGH444_PREDICTIVE', 244);
+    // ./wp-includes/ID3/module.audio-video.matroska.php
+    \define('EBML_ID_CHAPTERS', 0x43a770);
+    \define('EBML_ID_SEEKHEAD', 0x14d9b74);
+    \define('EBML_ID_TAGS', 0x254c367);
+    \define('EBML_ID_INFO', 0x549a966);
+    \define('EBML_ID_TRACKS', 0x654ae6b);
+    \define('EBML_ID_SEGMENT', 0x8538067);
+    \define('EBML_ID_ATTACHMENTS', 0x941a469);
+    \define('EBML_ID_EBML', 0xa45dfa3);
+    \define('EBML_ID_CUES', 0xc53bb6b);
+    \define('EBML_ID_CLUSTER', 0xf43b675);
+    \define('EBML_ID_LANGUAGE', 0x2b59c);
+    \define('EBML_ID_TRACKTIMECODESCALE', 0x3314f);
+    \define('EBML_ID_DEFAULTDURATION', 0x3e383);
+    \define('EBML_ID_CODECNAME', 0x58688);
+    \define('EBML_ID_CODECDOWNLOADURL', 0x6b240);
+    \define('EBML_ID_TIMECODESCALE', 0xad7b1);
+    \define('EBML_ID_COLOURSPACE', 0xeb524);
+    \define('EBML_ID_GAMMAVALUE', 0xfb523);
+    \define('EBML_ID_CODECSETTINGS', 0x1a9697);
+    \define('EBML_ID_CODECINFOURL', 0x1b4040);
+    \define('EBML_ID_PREVFILENAME', 0x1c83ab);
+    \define('EBML_ID_PREVUID', 0x1cb923);
+    \define('EBML_ID_NEXTFILENAME', 0x1e83bb);
+    \define('EBML_ID_NEXTUID', 0x1eb923);
+    \define('EBML_ID_CONTENTCOMPALGO', 0x254);
+    \define('EBML_ID_CONTENTCOMPSETTINGS', 0x255);
+    \define('EBML_ID_DOCTYPE', 0x282);
+    \define('EBML_ID_DOCTYPEREADVERSION', 0x285);
+    \define('EBML_ID_EBMLVERSION', 0x286);
+    \define('EBML_ID_DOCTYPEVERSION', 0x287);
+    \define('EBML_ID_EBMLMAXIDLENGTH', 0x2f2);
+    \define('EBML_ID_EBMLMAXSIZELENGTH', 0x2f3);
+    \define('EBML_ID_EBMLREADVERSION', 0x2f7);
+    \define('EBML_ID_CHAPLANGUAGE', 0x37c);
+    \define('EBML_ID_CHAPCOUNTRY', 0x37e);
+    \define('EBML_ID_SEGMENTFAMILY', 0x444);
+    \define('EBML_ID_DATEUTC', 0x461);
+    \define('EBML_ID_TAGLANGUAGE', 0x47a);
+    \define('EBML_ID_TAGDEFAULT', 0x484);
+    \define('EBML_ID_TAGBINARY', 0x485);
+    \define('EBML_ID_TAGSTRING', 0x487);
+    \define('EBML_ID_DURATION', 0x489);
+    \define('EBML_ID_CHAPPROCESSPRIVATE', 0x50d);
+    \define('EBML_ID_CHAPTERFLAGENABLED', 0x598);
+    \define('EBML_ID_TAGNAME', 0x5a3);
+    \define('EBML_ID_EDITIONENTRY', 0x5b9);
+    \define('EBML_ID_EDITIONUID', 0x5bc);
+    \define('EBML_ID_EDITIONFLAGHIDDEN', 0x5bd);
+    \define('EBML_ID_EDITIONFLAGDEFAULT', 0x5db);
+    \define('EBML_ID_EDITIONFLAGORDERED', 0x5dd);
+    \define('EBML_ID_FILEDATA', 0x65c);
+    \define('EBML_ID_FILEMIMETYPE', 0x660);
+    \define('EBML_ID_FILENAME', 0x66e);
+    \define('EBML_ID_FILEREFERRAL', 0x675);
+    \define('EBML_ID_FILEDESCRIPTION', 0x67e);
+    \define('EBML_ID_FILEUID', 0x6ae);
+    \define('EBML_ID_CONTENTENCALGO', 0x7e1);
+    \define('EBML_ID_CONTENTENCKEYID', 0x7e2);
+    \define('EBML_ID_CONTENTSIGNATURE', 0x7e3);
+    \define('EBML_ID_CONTENTSIGKEYID', 0x7e4);
+    \define('EBML_ID_CONTENTSIGALGO', 0x7e5);
+    \define('EBML_ID_CONTENTSIGHASHALGO', 0x7e6);
+    \define('EBML_ID_MUXINGAPP', 0xd80);
+    \define('EBML_ID_SEEK', 0xdbb);
+    \define('EBML_ID_CONTENTENCODINGORDER', 0x1031);
+    \define('EBML_ID_CONTENTENCODINGSCOPE', 0x1032);
+    \define('EBML_ID_CONTENTENCODINGTYPE', 0x1033);
+    \define('EBML_ID_CONTENTCOMPRESSION', 0x1034);
+    \define('EBML_ID_CONTENTENCRYPTION', 0x1035);
+    \define('EBML_ID_CUEREFNUMBER', 0x135f);
+    \define('EBML_ID_NAME', 0x136e);
+    \define('EBML_ID_CUEBLOCKNUMBER', 0x1378);
+    \define('EBML_ID_TRACKOFFSET', 0x137f);
+    \define('EBML_ID_SEEKID', 0x13ab);
+    \define('EBML_ID_SEEKPOSITION', 0x13ac);
+    \define('EBML_ID_STEREOMODE', 0x13b8);
+    \define('EBML_ID_OLDSTEREOMODE', 0x13b9);
+    \define('EBML_ID_PIXELCROPBOTTOM', 0x14aa);
+    \define('EBML_ID_DISPLAYWIDTH', 0x14b0);
+    \define('EBML_ID_DISPLAYUNIT', 0x14b2);
+    \define('EBML_ID_ASPECTRATIOTYPE', 0x14b3);
+    \define('EBML_ID_DISPLAYHEIGHT', 0x14ba);
+    \define('EBML_ID_PIXELCROPTOP', 0x14bb);
+    \define('EBML_ID_PIXELCROPLEFT', 0x14cc);
+    \define('EBML_ID_PIXELCROPRIGHT', 0x14dd);
+    \define('EBML_ID_FLAGFORCED', 0x15aa);
+    \define('EBML_ID_MAXBLOCKADDITIONID', 0x15ee);
+    \define('EBML_ID_WRITINGAPP', 0x1741);
+    \define('EBML_ID_CLUSTERSILENTTRACKS', 0x1854);
+    \define('EBML_ID_CLUSTERSILENTTRACKNUMBER', 0x18d7);
+    \define('EBML_ID_ATTACHEDFILE', 0x21a7);
+    \define('EBML_ID_CONTENTENCODING', 0x2240);
+    \define('EBML_ID_BITDEPTH', 0x2264);
+    \define('EBML_ID_CODECPRIVATE', 0x23a2);
+    \define('EBML_ID_TARGETS', 0x23c0);
+    \define('EBML_ID_CHAPTERPHYSICALEQUIV', 0x23c3);
+    \define('EBML_ID_TAGCHAPTERUID', 0x23c4);
+    \define('EBML_ID_TAGTRACKUID', 0x23c5);
+    \define('EBML_ID_TAGATTACHMENTUID', 0x23c6);
+    \define('EBML_ID_TAGEDITIONUID', 0x23c9);
+    \define('EBML_ID_TARGETTYPE', 0x23ca);
+    \define('EBML_ID_TRACKTRANSLATE', 0x2624);
+    \define('EBML_ID_TRACKTRANSLATETRACKID', 0x26a5);
+    \define('EBML_ID_TRACKTRANSLATECODEC', 0x26bf);
+    \define('EBML_ID_TRACKTRANSLATEEDITIONUID', 0x26fc);
+    \define('EBML_ID_SIMPLETAG', 0x27c8);
+    \define('EBML_ID_TARGETTYPEVALUE', 0x28ca);
+    \define('EBML_ID_CHAPPROCESSCOMMAND', 0x2911);
+    \define('EBML_ID_CHAPPROCESSTIME', 0x2922);
+    \define('EBML_ID_CHAPTERTRANSLATE', 0x2924);
+    \define('EBML_ID_CHAPPROCESSDATA', 0x2933);
+    \define('EBML_ID_CHAPPROCESS', 0x2944);
+    \define('EBML_ID_CHAPPROCESSCODECID', 0x2955);
+    \define('EBML_ID_CHAPTERTRANSLATEID', 0x29a5);
+    \define('EBML_ID_CHAPTERTRANSLATECODEC', 0x29bf);
+    \define('EBML_ID_CHAPTERTRANSLATEEDITIONUID', 0x29fc);
+    \define('EBML_ID_CONTENTENCODINGS', 0x2d80);
+    \define('EBML_ID_MINCACHE', 0x2de7);
+    \define('EBML_ID_MAXCACHE', 0x2df8);
+    \define('EBML_ID_CHAPTERSEGMENTUID', 0x2e67);
+    \define('EBML_ID_CHAPTERSEGMENTEDITIONUID', 0x2ebc);
+    \define('EBML_ID_TRACKOVERLAY', 0x2fab);
+    \define('EBML_ID_TAG', 0x3373);
+    \define('EBML_ID_SEGMENTFILENAME', 0x3384);
+    \define('EBML_ID_SEGMENTUID', 0x33a4);
+    \define('EBML_ID_CHAPTERUID', 0x33c4);
+    \define('EBML_ID_TRACKUID', 0x33c5);
+    \define('EBML_ID_ATTACHMENTLINK', 0x3446);
+    \define('EBML_ID_CLUSTERBLOCKADDITIONS', 0x35a1);
+    \define('EBML_ID_CHANNELPOSITIONS', 0x347b);
+    \define('EBML_ID_OUTPUTSAMPLINGFREQUENCY', 0x38b5);
+    \define('EBML_ID_TITLE', 0x3ba9);
+    \define('EBML_ID_CHAPTERDISPLAY', 0x0);
+    \define('EBML_ID_TRACKTYPE', 0x3);
+    \define('EBML_ID_CHAPSTRING', 0x5);
+    \define('EBML_ID_CODECID', 0x6);
+    \define('EBML_ID_FLAGDEFAULT', 0x8);
+    \define('EBML_ID_CHAPTERTRACKNUMBER', 0x9);
+    \define('EBML_ID_CLUSTERSLICES', 0xe);
+    \define('EBML_ID_CHAPTERTRACK', 0xf);
+    \define('EBML_ID_CHAPTERTIMESTART', 0x11);
+    \define('EBML_ID_CHAPTERTIMEEND', 0x12);
+    \define('EBML_ID_CUEREFTIME', 0x16);
+    \define('EBML_ID_CUEREFCLUSTER', 0x17);
+    \define('EBML_ID_CHAPTERFLAGHIDDEN', 0x18);
+    \define('EBML_ID_FLAGINTERLACED', 0x1a);
+    \define('EBML_ID_CLUSTERBLOCKDURATION', 0x1b);
+    \define('EBML_ID_FLAGLACING', 0x1c);
+    \define('EBML_ID_CHANNELS', 0x1f);
+    \define('EBML_ID_CLUSTERBLOCKGROUP', 0x20);
+    \define('EBML_ID_CLUSTERBLOCK', 0x21);
+    \define('EBML_ID_CLUSTERBLOCKVIRTUAL', 0x22);
+    \define('EBML_ID_CLUSTERSIMPLEBLOCK', 0x23);
+    \define('EBML_ID_CLUSTERCODECSTATE', 0x24);
+    \define('EBML_ID_CLUSTERBLOCKADDITIONAL', 0x25);
+    \define('EBML_ID_CLUSTERBLOCKMORE', 0x26);
+    \define('EBML_ID_CLUSTERPOSITION', 0x27);
+    \define('EBML_ID_CODECDECODEALL', 0x2a);
+    \define('EBML_ID_CLUSTERPREVSIZE', 0x2b);
+    \define('EBML_ID_TRACKENTRY', 0x2e);
+    \define('EBML_ID_CLUSTERENCRYPTEDBLOCK', 0x2f);
+    \define('EBML_ID_PIXELWIDTH', 0x30);
+    \define('EBML_ID_CUETIME', 0x33);
+    \define('EBML_ID_SAMPLINGFREQUENCY', 0x35);
+    \define('EBML_ID_CHAPTERATOM', 0x36);
+    \define('EBML_ID_CUETRACKPOSITIONS', 0x37);
+    \define('EBML_ID_FLAGENABLED', 0x39);
+    \define('EBML_ID_PIXELHEIGHT', 0x3a);
+    \define('EBML_ID_CUEPOINT', 0x3b);
+    \define('EBML_ID_CRC32', 0x3f);
+    \define('EBML_ID_CLUSTERBLOCKADDITIONID', 0x4b);
+    \define('EBML_ID_CLUSTERLACENUMBER', 0x4c);
+    \define('EBML_ID_CLUSTERFRAMENUMBER', 0x4d);
+    \define('EBML_ID_CLUSTERDELAY', 0x4e);
+    \define('EBML_ID_CLUSTERDURATION', 0x4f);
+    \define('EBML_ID_TRACKNUMBER', 0x57);
+    \define('EBML_ID_CUEREFERENCE', 0x5b);
+    \define('EBML_ID_VIDEO', 0x60);
+    \define('EBML_ID_AUDIO', 0x61);
+    \define('EBML_ID_CLUSTERTIMESLICE', 0x68);
+    \define('EBML_ID_CUECODECSTATE', 0x6a);
+    \define('EBML_ID_CUEREFCODECSTATE', 0x6b);
+    \define('EBML_ID_VOID', 0x6c);
+    \define('EBML_ID_CLUSTERTIMECODE', 0x67);
+    \define('EBML_ID_CLUSTERBLOCKADDID', 0x6e);
+    \define('EBML_ID_CUECLUSTERPOSITION', 0x71);
+    \define('EBML_ID_CUETRACK', 0x77);
+    \define('EBML_ID_CLUSTERREFERENCEPRIORITY', 0x7a);
+    \define('EBML_ID_CLUSTERREFERENCEBLOCK', 0x7b);
+    \define('EBML_ID_CLUSTERREFERENCEVIRTUAL', 0x7d);
+    // ./wp-includes/rewrite.php
+    \define('EP_NONE', 0);
+    \define('EP_PERMALINK', 1);
+    \define('EP_ATTACHMENT', 2);
+    \define('EP_DATE', 4);
+    \define('EP_YEAR', 8);
+    \define('EP_MONTH', 16);
+    \define('EP_DAY', 32);
+    \define('EP_ROOT', 64);
+    \define('EP_COMMENTS', 128);
+    \define('EP_SEARCH', 256);
+    \define('EP_CATEGORIES', 512);
+    \define('EP_TAGS', 1024);
+    \define('EP_AUTHORS', 2048);
+    \define('EP_PAGES', 4096);
+    \define('EP_ALL_ARCHIVES', 3644);
+    \define('EP_ALL', 8191);
+    // ./index.php
+    \define('WP_USE_THEMES', \true);
     /**
      * Adds an action hook specific to this page.
      *
@@ -79044,33 +79575,6 @@ namespace {
     function wpmu_activate_stylesheet()
     {
     }
-    /**
-     * WordPress Ajax Process Execution
-     *
-     * @package WordPress
-     * @subpackage Administration
-     *
-     * @link https://developer.wordpress.org/plugins/javascript/ajax
-     */
-    /**
-     * Executing Ajax process.
-     *
-     * @since 2.1.0
-     */
-    \define('DOING_AJAX', \true);
-    \define('WP_ADMIN', \true);
-    \define('WP_NETWORK_ADMIN', \false);
-    \define('WP_USER_ADMIN', \false);
-    \define('WP_BLOG_ADMIN', \true);
-    \define('WP_LOAD_IMPORTERS', \true);
-    /**
-     * Theme Customize Screen.
-     *
-     * @package WordPress
-     * @subpackage Customize
-     * @since 3.4.0
-     */
-    \define('IFRAME_REQUEST', \true);
     /**
      * Display JavaScript on the page.
      *
@@ -80180,110 +80684,6 @@ namespace {
     function wp_link_manager_disabled_message()
     {
     }
-    \define('CRLF', "\r\n");
-    \define('FTP_AUTOASCII', -1);
-    \define('FTP_FORCE', \true);
-    /**
-     * @since 2.5.0
-     * @var string
-     */
-    \define('FTP_OS_Unix', 'u');
-    /**
-     * @since 2.5.0
-     * @var string
-     */
-    \define('FTP_OS_Windows', 'w');
-    /**
-     * @since 2.5.0
-     * @var string
-     */
-    \define('FTP_OS_Mac', 'm');
-    \define('PCLZIP_READ_BLOCK_SIZE', 2048);
-    \define('PCLZIP_SEPARATOR', ',');
-    \define('PCLZIP_ERROR_EXTERNAL', 0);
-    \define('PCLZIP_TEMPORARY_DIR', '');
-    \define('PCLZIP_TEMPORARY_FILE_RATIO', 0.47);
-    // ----- Error codes
-    //   -1 : Unable to open file in binary write mode
-    //   -2 : Unable to open file in binary read mode
-    //   -3 : Invalid parameters
-    //   -4 : File does not exist
-    //   -5 : Filename is too long (max. 255)
-    //   -6 : Not a valid zip file
-    //   -7 : Invalid extracted file size
-    //   -8 : Unable to create directory
-    //   -9 : Invalid archive extension
-    //  -10 : Invalid archive format
-    //  -11 : Unable to delete file (unlink)
-    //  -12 : Unable to rename file (rename)
-    //  -13 : Invalid header checksum
-    //  -14 : Invalid archive size
-    \define('PCLZIP_ERR_USER_ABORTED', 2);
-    \define('PCLZIP_ERR_NO_ERROR', 0);
-    \define('PCLZIP_ERR_WRITE_OPEN_FAIL', -1);
-    \define('PCLZIP_ERR_READ_OPEN_FAIL', -2);
-    \define('PCLZIP_ERR_INVALID_PARAMETER', -3);
-    \define('PCLZIP_ERR_MISSING_FILE', -4);
-    \define('PCLZIP_ERR_FILENAME_TOO_LONG', -5);
-    \define('PCLZIP_ERR_INVALID_ZIP', -6);
-    \define('PCLZIP_ERR_BAD_EXTRACTED_FILE', -7);
-    \define('PCLZIP_ERR_DIR_CREATE_FAIL', -8);
-    \define('PCLZIP_ERR_BAD_EXTENSION', -9);
-    \define('PCLZIP_ERR_BAD_FORMAT', -10);
-    \define('PCLZIP_ERR_DELETE_FILE_FAIL', -11);
-    \define('PCLZIP_ERR_RENAME_FILE_FAIL', -12);
-    \define('PCLZIP_ERR_BAD_CHECKSUM', -13);
-    \define('PCLZIP_ERR_INVALID_ARCHIVE_ZIP', -14);
-    \define('PCLZIP_ERR_MISSING_OPTION_VALUE', -15);
-    \define('PCLZIP_ERR_INVALID_OPTION_VALUE', -16);
-    \define('PCLZIP_ERR_ALREADY_A_DIRECTORY', -17);
-    \define('PCLZIP_ERR_UNSUPPORTED_COMPRESSION', -18);
-    \define('PCLZIP_ERR_UNSUPPORTED_ENCRYPTION', -19);
-    \define('PCLZIP_ERR_INVALID_ATTRIBUTE_VALUE', -20);
-    \define('PCLZIP_ERR_DIRECTORY_RESTRICTION', -21);
-    // ----- Options values
-    \define('PCLZIP_OPT_PATH', 77001);
-    \define('PCLZIP_OPT_ADD_PATH', 77002);
-    \define('PCLZIP_OPT_REMOVE_PATH', 77003);
-    \define('PCLZIP_OPT_REMOVE_ALL_PATH', 77004);
-    \define('PCLZIP_OPT_SET_CHMOD', 77005);
-    \define('PCLZIP_OPT_EXTRACT_AS_STRING', 77006);
-    \define('PCLZIP_OPT_NO_COMPRESSION', 77007);
-    \define('PCLZIP_OPT_BY_NAME', 77008);
-    \define('PCLZIP_OPT_BY_INDEX', 77009);
-    \define('PCLZIP_OPT_BY_EREG', 77010);
-    \define('PCLZIP_OPT_BY_PREG', 77011);
-    \define('PCLZIP_OPT_COMMENT', 77012);
-    \define('PCLZIP_OPT_ADD_COMMENT', 77013);
-    \define('PCLZIP_OPT_PREPEND_COMMENT', 77014);
-    \define('PCLZIP_OPT_EXTRACT_IN_OUTPUT', 77015);
-    \define('PCLZIP_OPT_REPLACE_NEWER', 77016);
-    \define('PCLZIP_OPT_STOP_ON_ERROR', 77017);
-    // Having big trouble with crypt. Need to multiply 2 long int
-    // which is not correctly supported by PHP ...
-    //define( 'PCLZIP_OPT_CRYPT', 77018 );
-    \define('PCLZIP_OPT_EXTRACT_DIR_RESTRICTION', 77019);
-    \define('PCLZIP_OPT_TEMP_FILE_THRESHOLD', 77020);
-    \define('PCLZIP_OPT_ADD_TEMP_FILE_THRESHOLD', 77020);
-    // alias
-    \define('PCLZIP_OPT_TEMP_FILE_ON', 77021);
-    \define('PCLZIP_OPT_ADD_TEMP_FILE_ON', 77021);
-    // alias
-    \define('PCLZIP_OPT_TEMP_FILE_OFF', 77022);
-    \define('PCLZIP_OPT_ADD_TEMP_FILE_OFF', 77022);
-    // alias
-    // ----- File description attributes
-    \define('PCLZIP_ATT_FILE_NAME', 79001);
-    \define('PCLZIP_ATT_FILE_NEW_SHORT_NAME', 79002);
-    \define('PCLZIP_ATT_FILE_NEW_FULL_NAME', 79003);
-    \define('PCLZIP_ATT_FILE_MTIME', 79004);
-    \define('PCLZIP_ATT_FILE_CONTENT', 79005);
-    \define('PCLZIP_ATT_FILE_COMMENT', 79006);
-    // ----- Call backs values
-    \define('PCLZIP_CB_PRE_EXTRACT', 78001);
-    \define('PCLZIP_CB_POST_EXTRACT', 78002);
-    \define('PCLZIP_CB_PRE_ADD', 78003);
-    \define('PCLZIP_CB_POST_ADD', 78004);
     function PclZipUtilPathReduction($p_dir)
     {
     }
@@ -81632,20 +82032,6 @@ namespace {
     function image_attachment_fields_to_save($post, $attachment)
     {
     }
-    /**
-     * WordPress Export Administration API
-     *
-     * @package WordPress
-     * @subpackage Administration
-     */
-    /**
-     * Version number for the export format.
-     *
-     * Bump this when something changes that might affect compatibility.
-     *
-     * @since 2.5.0
-     */
-    \define('WXR_VERSION', '1.2');
     /**
      * Generates the WXR export file for download.
      *
@@ -89979,16 +90365,6 @@ namespace {
     function endElement($parser, $tag_name)
     {
     }
-    \define('ABSPATH', \dirname(__DIR__) . '/');
-    \define('WPINC', 'wp-includes');
-    \define('WP_CONTENT_DIR', \ABSPATH . 'wp-content');
-    /**
-     * Database Repair and Optimization Script.
-     *
-     * @package WordPress
-     * @subpackage Database
-     */
-    \define('WP_REPAIRING', \true);
     /**
      * Display menu.
      *
@@ -90042,33 +90418,9 @@ namespace {
     function wp_nav_menu_max_depth($classes)
     {
     }
-    /**
-     * Network installation administration panel.
-     *
-     * A multi-step process allowing the user to enable a network of WordPress sites.
-     *
-     * @since 3.0.0
-     *
-     * @package WordPress
-     * @subpackage Administration
-     */
-    \define('WP_INSTALLING_NETWORK', \true);
     function wp_load_press_this()
     {
     }
-    /**
-     * User Profile Administration Screen.
-     *
-     * @package WordPress
-     * @subpackage Administration
-     */
-    /**
-     * This is a profile page.
-     *
-     * @since 2.5.0
-     * @var bool
-     */
-    \define('IS_PROFILE_PAGE', \true);
     /**
      * We are blissfully unaware of anything.
      */
@@ -90203,75 +90555,6 @@ namespace {
     {
     }
     /**
-     * The base configuration for WordPress
-     *
-     * The wp-config.php creation script uses this file during the installation.
-     * You don't have to use the website, you can copy this file to "wp-config.php"
-     * and fill in the values.
-     *
-     * This file contains the following configurations:
-     *
-     * * Database settings
-     * * Secret keys
-     * * Database table prefix
-     * * ABSPATH
-     *
-     * @link https://developer.wordpress.org/advanced-administration/wordpress/wp-config/
-     *
-     * @package WordPress
-     */
-    // ** Database settings - You can get this info from your web host ** //
-    /** The name of the database for WordPress */
-    \define('DB_NAME', 'database_name_here');
-    /** Database username */
-    \define('DB_USER', 'username_here');
-    /** Database password */
-    \define('DB_PASSWORD', 'password_here');
-    /** Database hostname */
-    \define('DB_HOST', 'localhost');
-    /** Database charset to use in creating database tables. */
-    \define('DB_CHARSET', 'utf8');
-    /** The database collate type. Don't change this if in doubt. */
-    \define('DB_COLLATE', '');
-    /**#@+
-     * Authentication unique keys and salts.
-     *
-     * Change these to different unique phrases! You can generate these using
-     * the {@link https://api.wordpress.org/secret-key/1.1/salt/ WordPress.org secret-key service}.
-     *
-     * You can change these at any point in time to invalidate all existing cookies.
-     * This will force all users to have to log in again.
-     *
-     * @since 2.6.0
-     */
-    \define('AUTH_KEY', 'put your unique phrase here');
-    \define('SECURE_AUTH_KEY', 'put your unique phrase here');
-    \define('LOGGED_IN_KEY', 'put your unique phrase here');
-    \define('NONCE_KEY', 'put your unique phrase here');
-    \define('AUTH_SALT', 'put your unique phrase here');
-    \define('SECURE_AUTH_SALT', 'put your unique phrase here');
-    \define('LOGGED_IN_SALT', 'put your unique phrase here');
-    \define('NONCE_SALT', 'put your unique phrase here');
-    /**
-     * For developers: WordPress debugging mode.
-     *
-     * Change this to true to enable the display of notices during development.
-     * It is strongly recommended that plugin and theme developers use WP_DEBUG
-     * in their development environments.
-     *
-     * For information on other constants that can be used for debugging,
-     * visit the documentation.
-     *
-     * @link https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/
-     */
-    \define('WP_DEBUG', \false);
-    /**
-     * Tell WordPress the cron task is running.
-     *
-     * @var bool
-     */
-    \define('DOING_CRON', \true);
-    /**
      * Retrieves the cron lock.
      *
      * Returns the uncached `doing_cron` transient.
@@ -90286,766 +90569,6 @@ namespace {
     function _get_cron_lock()
     {
     }
-    \define('GETID3_OS_ISWINDOWS', \stripos(\PHP_OS, 'WIN') === 0);
-    \define('GETID3_INCLUDEPATH', \dirname(__FILE__) . \DIRECTORY_SEPARATOR);
-    \define('GETID3_TEMP_DIR', $temp_dir);
-    \define('GETID3_FLV_TAG_AUDIO', 8);
-    \define('GETID3_FLV_TAG_VIDEO', 9);
-    \define('GETID3_FLV_TAG_META', 18);
-    \define('GETID3_FLV_VIDEO_H263', 2);
-    \define('GETID3_FLV_VIDEO_SCREEN', 3);
-    \define('GETID3_FLV_VIDEO_VP6FLV', 4);
-    \define('GETID3_FLV_VIDEO_VP6FLV_ALPHA', 5);
-    \define('GETID3_FLV_VIDEO_SCREENV2', 6);
-    \define('GETID3_FLV_VIDEO_H264', 7);
-    \define('H264_AVC_SEQUENCE_HEADER', 0);
-    \define('H264_PROFILE_BASELINE', 66);
-    \define('H264_PROFILE_MAIN', 77);
-    \define('H264_PROFILE_EXTENDED', 88);
-    \define('H264_PROFILE_HIGH', 100);
-    \define('H264_PROFILE_HIGH10', 110);
-    \define('H264_PROFILE_HIGH422', 122);
-    \define('H264_PROFILE_HIGH444', 144);
-    \define('H264_PROFILE_HIGH444_PREDICTIVE', 244);
-    \define('EBML_ID_CHAPTERS', 0x43a770);
-    // [10][43][A7][70] -- A system to define basic menus and partition data. For more detailed information, look at the Chapters Explanation.
-    \define('EBML_ID_SEEKHEAD', 0x14d9b74);
-    // [11][4D][9B][74] -- Contains the position of other level 1 elements.
-    \define('EBML_ID_TAGS', 0x254c367);
-    // [12][54][C3][67] -- Element containing elements specific to Tracks/Chapters. A list of valid tags can be found <http://www.matroska.org/technical/specs/tagging/index.html>.
-    \define('EBML_ID_INFO', 0x549a966);
-    // [15][49][A9][66] -- Contains miscellaneous general information and statistics on the file.
-    \define('EBML_ID_TRACKS', 0x654ae6b);
-    // [16][54][AE][6B] -- A top-level block of information with many tracks described.
-    \define('EBML_ID_SEGMENT', 0x8538067);
-    // [18][53][80][67] -- This element contains all other top-level (level 1) elements. Typically a Matroska file is composed of 1 segment.
-    \define('EBML_ID_ATTACHMENTS', 0x941a469);
-    // [19][41][A4][69] -- Contain attached files.
-    \define('EBML_ID_EBML', 0xa45dfa3);
-    // [1A][45][DF][A3] -- Set the EBML characteristics of the data to follow. Each EBML document has to start with this.
-    \define('EBML_ID_CUES', 0xc53bb6b);
-    // [1C][53][BB][6B] -- A top-level element to speed seeking access. All entries are local to the segment.
-    \define('EBML_ID_CLUSTER', 0xf43b675);
-    // [1F][43][B6][75] -- The lower level element containing the (monolithic) Block structure.
-    \define('EBML_ID_LANGUAGE', 0x2b59c);
-    //     [22][B5][9C] -- Specifies the language of the track in the Matroska languages form.
-    \define('EBML_ID_TRACKTIMECODESCALE', 0x3314f);
-    //     [23][31][4F] -- The scale to apply on this track to work at normal speed in relation with other tracks (mostly used to adjust video speed when the audio length differs).
-    \define('EBML_ID_DEFAULTDURATION', 0x3e383);
-    //     [23][E3][83] -- Number of nanoseconds (i.e. not scaled) per frame.
-    \define('EBML_ID_CODECNAME', 0x58688);
-    //     [25][86][88] -- A human-readable string specifying the codec.
-    \define('EBML_ID_CODECDOWNLOADURL', 0x6b240);
-    //     [26][B2][40] -- A URL to download about the codec used.
-    \define('EBML_ID_TIMECODESCALE', 0xad7b1);
-    //     [2A][D7][B1] -- Timecode scale in nanoseconds (1.000.000 means all timecodes in the segment are expressed in milliseconds).
-    \define('EBML_ID_COLOURSPACE', 0xeb524);
-    //     [2E][B5][24] -- Same value as in AVI (32 bits).
-    \define('EBML_ID_GAMMAVALUE', 0xfb523);
-    //     [2F][B5][23] -- Gamma Value.
-    \define('EBML_ID_CODECSETTINGS', 0x1a9697);
-    //     [3A][96][97] -- A string describing the encoding setting used.
-    \define('EBML_ID_CODECINFOURL', 0x1b4040);
-    //     [3B][40][40] -- A URL to find information about the codec used.
-    \define('EBML_ID_PREVFILENAME', 0x1c83ab);
-    //     [3C][83][AB] -- An escaped filename corresponding to the previous segment.
-    \define('EBML_ID_PREVUID', 0x1cb923);
-    //     [3C][B9][23] -- A unique ID to identify the previous chained segment (128 bits).
-    \define('EBML_ID_NEXTFILENAME', 0x1e83bb);
-    //     [3E][83][BB] -- An escaped filename corresponding to the next segment.
-    \define('EBML_ID_NEXTUID', 0x1eb923);
-    //     [3E][B9][23] -- A unique ID to identify the next chained segment (128 bits).
-    \define('EBML_ID_CONTENTCOMPALGO', 0x254);
-    //         [42][54] -- The compression algorithm used. Algorithms that have been specified so far are:
-    \define('EBML_ID_CONTENTCOMPSETTINGS', 0x255);
-    //         [42][55] -- Settings that might be needed by the decompressor. For Header Stripping (ContentCompAlgo=3), the bytes that were removed from the beggining of each frames of the track.
-    \define('EBML_ID_DOCTYPE', 0x282);
-    //         [42][82] -- A string that describes the type of document that follows this EBML header ('matroska' in our case).
-    \define('EBML_ID_DOCTYPEREADVERSION', 0x285);
-    //         [42][85] -- The minimum DocType version an interpreter has to support to read this file.
-    \define('EBML_ID_EBMLVERSION', 0x286);
-    //         [42][86] -- The version of EBML parser used to create the file.
-    \define('EBML_ID_DOCTYPEVERSION', 0x287);
-    //         [42][87] -- The version of DocType interpreter used to create the file.
-    \define('EBML_ID_EBMLMAXIDLENGTH', 0x2f2);
-    //         [42][F2] -- The maximum length of the IDs you'll find in this file (4 or less in Matroska).
-    \define('EBML_ID_EBMLMAXSIZELENGTH', 0x2f3);
-    //         [42][F3] -- The maximum length of the sizes you'll find in this file (8 or less in Matroska). This does not override the element size indicated at the beginning of an element. Elements that have an indicated size which is larger than what is allowed by EBMLMaxSizeLength shall be considered invalid.
-    \define('EBML_ID_EBMLREADVERSION', 0x2f7);
-    //         [42][F7] -- The minimum EBML version a parser has to support to read this file.
-    \define('EBML_ID_CHAPLANGUAGE', 0x37c);
-    //         [43][7C] -- The languages corresponding to the string, in the bibliographic ISO-639-2 form.
-    \define('EBML_ID_CHAPCOUNTRY', 0x37e);
-    //         [43][7E] -- The countries corresponding to the string, same 2 octets as in Internet domains.
-    \define('EBML_ID_SEGMENTFAMILY', 0x444);
-    //         [44][44] -- A randomly generated unique ID that all segments related to each other must use (128 bits).
-    \define('EBML_ID_DATEUTC', 0x461);
-    //         [44][61] -- Date of the origin of timecode (value 0), i.e. production date.
-    \define('EBML_ID_TAGLANGUAGE', 0x47a);
-    //         [44][7A] -- Specifies the language of the tag specified, in the Matroska languages form.
-    \define('EBML_ID_TAGDEFAULT', 0x484);
-    //         [44][84] -- Indication to know if this is the default/original language to use for the given tag.
-    \define('EBML_ID_TAGBINARY', 0x485);
-    //         [44][85] -- The values of the Tag if it is binary. Note that this cannot be used in the same SimpleTag as TagString.
-    \define('EBML_ID_TAGSTRING', 0x487);
-    //         [44][87] -- The value of the Tag.
-    \define('EBML_ID_DURATION', 0x489);
-    //         [44][89] -- Duration of the segment (based on TimecodeScale).
-    \define('EBML_ID_CHAPPROCESSPRIVATE', 0x50d);
-    //         [45][0D] -- Some optional data attached to the ChapProcessCodecID information. For ChapProcessCodecID = 1, it is the "DVD level" equivalent.
-    \define('EBML_ID_CHAPTERFLAGENABLED', 0x598);
-    //         [45][98] -- Specify wether the chapter is enabled. It can be enabled/disabled by a Control Track. When disabled, the movie should skip all the content between the TimeStart and TimeEnd of this chapter.
-    \define('EBML_ID_TAGNAME', 0x5a3);
-    //         [45][A3] -- The name of the Tag that is going to be stored.
-    \define('EBML_ID_EDITIONENTRY', 0x5b9);
-    //         [45][B9] -- Contains all information about a segment edition.
-    \define('EBML_ID_EDITIONUID', 0x5bc);
-    //         [45][BC] -- A unique ID to identify the edition. It's useful for tagging an edition.
-    \define('EBML_ID_EDITIONFLAGHIDDEN', 0x5bd);
-    //         [45][BD] -- If an edition is hidden (1), it should not be available to the user interface (but still to Control Tracks).
-    \define('EBML_ID_EDITIONFLAGDEFAULT', 0x5db);
-    //         [45][DB] -- If a flag is set (1) the edition should be used as the default one.
-    \define('EBML_ID_EDITIONFLAGORDERED', 0x5dd);
-    //         [45][DD] -- Specify if the chapters can be defined multiple times and the order to play them is enforced.
-    \define('EBML_ID_FILEDATA', 0x65c);
-    //         [46][5C] -- The data of the file.
-    \define('EBML_ID_FILEMIMETYPE', 0x660);
-    //         [46][60] -- MIME type of the file.
-    \define('EBML_ID_FILENAME', 0x66e);
-    //         [46][6E] -- Filename of the attached file.
-    \define('EBML_ID_FILEREFERRAL', 0x675);
-    //         [46][75] -- A binary value that a track/codec can refer to when the attachment is needed.
-    \define('EBML_ID_FILEDESCRIPTION', 0x67e);
-    //         [46][7E] -- A human-friendly name for the attached file.
-    \define('EBML_ID_FILEUID', 0x6ae);
-    //         [46][AE] -- Unique ID representing the file, as random as possible.
-    \define('EBML_ID_CONTENTENCALGO', 0x7e1);
-    //         [47][E1] -- The encryption algorithm used. The value '0' means that the contents have not been encrypted but only signed. Predefined values:
-    \define('EBML_ID_CONTENTENCKEYID', 0x7e2);
-    //         [47][E2] -- For public key algorithms this is the ID of the public key the data was encrypted with.
-    \define('EBML_ID_CONTENTSIGNATURE', 0x7e3);
-    //         [47][E3] -- A cryptographic signature of the contents.
-    \define('EBML_ID_CONTENTSIGKEYID', 0x7e4);
-    //         [47][E4] -- This is the ID of the private key the data was signed with.
-    \define('EBML_ID_CONTENTSIGALGO', 0x7e5);
-    //         [47][E5] -- The algorithm used for the signature. A value of '0' means that the contents have not been signed but only encrypted. Predefined values:
-    \define('EBML_ID_CONTENTSIGHASHALGO', 0x7e6);
-    //         [47][E6] -- The hash algorithm used for the signature. A value of '0' means that the contents have not been signed but only encrypted. Predefined values:
-    \define('EBML_ID_MUXINGAPP', 0xd80);
-    //         [4D][80] -- Muxing application or library ("libmatroska-0.4.3").
-    \define('EBML_ID_SEEK', 0xdbb);
-    //         [4D][BB] -- Contains a single seek entry to an EBML element.
-    \define('EBML_ID_CONTENTENCODINGORDER', 0x1031);
-    //         [50][31] -- Tells when this modification was used during encoding/muxing starting with 0 and counting upwards. The decoder/demuxer has to start with the highest order number it finds and work its way down. This value has to be unique over all ContentEncodingOrder elements in the segment.
-    \define('EBML_ID_CONTENTENCODINGSCOPE', 0x1032);
-    //         [50][32] -- A bit field that describes which elements have been modified in this way. Values (big endian) can be OR'ed. Possible values:
-    \define('EBML_ID_CONTENTENCODINGTYPE', 0x1033);
-    //         [50][33] -- A value describing what kind of transformation has been done. Possible values:
-    \define('EBML_ID_CONTENTCOMPRESSION', 0x1034);
-    //         [50][34] -- Settings describing the compression used. Must be present if the value of ContentEncodingType is 0 and absent otherwise. Each block must be decompressable even if no previous block is available in order not to prevent seeking.
-    \define('EBML_ID_CONTENTENCRYPTION', 0x1035);
-    //         [50][35] -- Settings describing the encryption used. Must be present if the value of ContentEncodingType is 1 and absent otherwise.
-    \define('EBML_ID_CUEREFNUMBER', 0x135f);
-    //         [53][5F] -- Number of the referenced Block of Track X in the specified Cluster.
-    \define('EBML_ID_NAME', 0x136e);
-    //         [53][6E] -- A human-readable track name.
-    \define('EBML_ID_CUEBLOCKNUMBER', 0x1378);
-    //         [53][78] -- Number of the Block in the specified Cluster.
-    \define('EBML_ID_TRACKOFFSET', 0x137f);
-    //         [53][7F] -- A value to add to the Block's Timecode. This can be used to adjust the playback offset of a track.
-    \define('EBML_ID_SEEKID', 0x13ab);
-    //         [53][AB] -- The binary ID corresponding to the element name.
-    \define('EBML_ID_SEEKPOSITION', 0x13ac);
-    //         [53][AC] -- The position of the element in the segment in octets (0 = first level 1 element).
-    \define('EBML_ID_STEREOMODE', 0x13b8);
-    //         [53][B8] -- Stereo-3D video mode.
-    \define('EBML_ID_OLDSTEREOMODE', 0x13b9);
-    //         [53][B9] -- Bogus StereoMode value used in old versions of libmatroska. DO NOT USE. (0: mono, 1: right eye, 2: left eye, 3: both eyes).
-    \define('EBML_ID_PIXELCROPBOTTOM', 0x14aa);
-    //         [54][AA] -- The number of video pixels to remove at the bottom of the image (for HDTV content).
-    \define('EBML_ID_DISPLAYWIDTH', 0x14b0);
-    //         [54][B0] -- Width of the video frames to display.
-    \define('EBML_ID_DISPLAYUNIT', 0x14b2);
-    //         [54][B2] -- Type of the unit for DisplayWidth/Height (0: pixels, 1: centimeters, 2: inches).
-    \define('EBML_ID_ASPECTRATIOTYPE', 0x14b3);
-    //         [54][B3] -- Specify the possible modifications to the aspect ratio (0: free resizing, 1: keep aspect ratio, 2: fixed).
-    \define('EBML_ID_DISPLAYHEIGHT', 0x14ba);
-    //         [54][BA] -- Height of the video frames to display.
-    \define('EBML_ID_PIXELCROPTOP', 0x14bb);
-    //         [54][BB] -- The number of video pixels to remove at the top of the image.
-    \define('EBML_ID_PIXELCROPLEFT', 0x14cc);
-    //         [54][CC] -- The number of video pixels to remove on the left of the image.
-    \define('EBML_ID_PIXELCROPRIGHT', 0x14dd);
-    //         [54][DD] -- The number of video pixels to remove on the right of the image.
-    \define('EBML_ID_FLAGFORCED', 0x15aa);
-    //         [55][AA] -- Set if that track MUST be used during playback. There can be many forced track for a kind (audio, video or subs), the player should select the one which language matches the user preference or the default + forced track. Overlay MAY happen between a forced and non-forced track of the same kind.
-    \define('EBML_ID_MAXBLOCKADDITIONID', 0x15ee);
-    //         [55][EE] -- The maximum value of BlockAddID. A value 0 means there is no BlockAdditions for this track.
-    \define('EBML_ID_WRITINGAPP', 0x1741);
-    //         [57][41] -- Writing application ("mkvmerge-0.3.3").
-    \define('EBML_ID_CLUSTERSILENTTRACKS', 0x1854);
-    //         [58][54] -- The list of tracks that are not used in that part of the stream. It is useful when using overlay tracks on seeking. Then you should decide what track to use.
-    \define('EBML_ID_CLUSTERSILENTTRACKNUMBER', 0x18d7);
-    //         [58][D7] -- One of the track number that are not used from now on in the stream. It could change later if not specified as silent in a further Cluster.
-    \define('EBML_ID_ATTACHEDFILE', 0x21a7);
-    //         [61][A7] -- An attached file.
-    \define('EBML_ID_CONTENTENCODING', 0x2240);
-    //         [62][40] -- Settings for one content encoding like compression or encryption.
-    \define('EBML_ID_BITDEPTH', 0x2264);
-    //         [62][64] -- Bits per sample, mostly used for PCM.
-    \define('EBML_ID_CODECPRIVATE', 0x23a2);
-    //         [63][A2] -- Private data only known to the codec.
-    \define('EBML_ID_TARGETS', 0x23c0);
-    //         [63][C0] -- Contain all UIDs where the specified meta data apply. It is void to describe everything in the segment.
-    \define('EBML_ID_CHAPTERPHYSICALEQUIV', 0x23c3);
-    //         [63][C3] -- Specify the physical equivalent of this ChapterAtom like "DVD" (60) or "SIDE" (50), see complete list of values.
-    \define('EBML_ID_TAGCHAPTERUID', 0x23c4);
-    //         [63][C4] -- A unique ID to identify the Chapter(s) the tags belong to. If the value is 0 at this level, the tags apply to all chapters in the Segment.
-    \define('EBML_ID_TAGTRACKUID', 0x23c5);
-    //         [63][C5] -- A unique ID to identify the Track(s) the tags belong to. If the value is 0 at this level, the tags apply to all tracks in the Segment.
-    \define('EBML_ID_TAGATTACHMENTUID', 0x23c6);
-    //         [63][C6] -- A unique ID to identify the Attachment(s) the tags belong to. If the value is 0 at this level, the tags apply to all the attachments in the Segment.
-    \define('EBML_ID_TAGEDITIONUID', 0x23c9);
-    //         [63][C9] -- A unique ID to identify the EditionEntry(s) the tags belong to. If the value is 0 at this level, the tags apply to all editions in the Segment.
-    \define('EBML_ID_TARGETTYPE', 0x23ca);
-    //         [63][CA] -- An informational string that can be used to display the logical level of the target like "ALBUM", "TRACK", "MOVIE", "CHAPTER", etc (see TargetType).
-    \define('EBML_ID_TRACKTRANSLATE', 0x2624);
-    //         [66][24] -- The track identification for the given Chapter Codec.
-    \define('EBML_ID_TRACKTRANSLATETRACKID', 0x26a5);
-    //         [66][A5] -- The binary value used to represent this track in the chapter codec data. The format depends on the ChapProcessCodecID used.
-    \define('EBML_ID_TRACKTRANSLATECODEC', 0x26bf);
-    //         [66][BF] -- The chapter codec using this ID (0: Matroska Script, 1: DVD-menu).
-    \define('EBML_ID_TRACKTRANSLATEEDITIONUID', 0x26fc);
-    //         [66][FC] -- Specify an edition UID on which this translation applies. When not specified, it means for all editions found in the segment.
-    \define('EBML_ID_SIMPLETAG', 0x27c8);
-    //         [67][C8] -- Contains general information about the target.
-    \define('EBML_ID_TARGETTYPEVALUE', 0x28ca);
-    //         [68][CA] -- A number to indicate the logical level of the target (see TargetType).
-    \define('EBML_ID_CHAPPROCESSCOMMAND', 0x2911);
-    //         [69][11] -- Contains all the commands associated to the Atom.
-    \define('EBML_ID_CHAPPROCESSTIME', 0x2922);
-    //         [69][22] -- Defines when the process command should be handled (0: during the whole chapter, 1: before starting playback, 2: after playback of the chapter).
-    \define('EBML_ID_CHAPTERTRANSLATE', 0x2924);
-    //         [69][24] -- A tuple of corresponding ID used by chapter codecs to represent this segment.
-    \define('EBML_ID_CHAPPROCESSDATA', 0x2933);
-    //         [69][33] -- Contains the command information. The data should be interpreted depending on the ChapProcessCodecID value. For ChapProcessCodecID = 1, the data correspond to the binary DVD cell pre/post commands.
-    \define('EBML_ID_CHAPPROCESS', 0x2944);
-    //         [69][44] -- Contains all the commands associated to the Atom.
-    \define('EBML_ID_CHAPPROCESSCODECID', 0x2955);
-    //         [69][55] -- Contains the type of the codec used for the processing. A value of 0 means native Matroska processing (to be defined), a value of 1 means the DVD command set is used. More codec IDs can be added later.
-    \define('EBML_ID_CHAPTERTRANSLATEID', 0x29a5);
-    //         [69][A5] -- The binary value used to represent this segment in the chapter codec data. The format depends on the ChapProcessCodecID used.
-    \define('EBML_ID_CHAPTERTRANSLATECODEC', 0x29bf);
-    //         [69][BF] -- The chapter codec using this ID (0: Matroska Script, 1: DVD-menu).
-    \define('EBML_ID_CHAPTERTRANSLATEEDITIONUID', 0x29fc);
-    //         [69][FC] -- Specify an edition UID on which this correspondance applies. When not specified, it means for all editions found in the segment.
-    \define('EBML_ID_CONTENTENCODINGS', 0x2d80);
-    //         [6D][80] -- Settings for several content encoding mechanisms like compression or encryption.
-    \define('EBML_ID_MINCACHE', 0x2de7);
-    //         [6D][E7] -- The minimum number of frames a player should be able to cache during playback. If set to 0, the reference pseudo-cache system is not used.
-    \define('EBML_ID_MAXCACHE', 0x2df8);
-    //         [6D][F8] -- The maximum cache size required to store referenced frames in and the current frame. 0 means no cache is needed.
-    \define('EBML_ID_CHAPTERSEGMENTUID', 0x2e67);
-    //         [6E][67] -- A segment to play in place of this chapter. Edition ChapterSegmentEditionUID should be used for this segment, otherwise no edition is used.
-    \define('EBML_ID_CHAPTERSEGMENTEDITIONUID', 0x2ebc);
-    //         [6E][BC] -- The edition to play from the segment linked in ChapterSegmentUID.
-    \define('EBML_ID_TRACKOVERLAY', 0x2fab);
-    //         [6F][AB] -- Specify that this track is an overlay track for the Track specified (in the u-integer). That means when this track has a gap (see SilentTracks) the overlay track should be used instead. The order of multiple TrackOverlay matters, the first one is the one that should be used. If not found it should be the second, etc.
-    \define('EBML_ID_TAG', 0x3373);
-    //         [73][73] -- Element containing elements specific to Tracks/Chapters.
-    \define('EBML_ID_SEGMENTFILENAME', 0x3384);
-    //         [73][84] -- A filename corresponding to this segment.
-    \define('EBML_ID_SEGMENTUID', 0x33a4);
-    //         [73][A4] -- A randomly generated unique ID to identify the current segment between many others (128 bits).
-    \define('EBML_ID_CHAPTERUID', 0x33c4);
-    //         [73][C4] -- A unique ID to identify the Chapter.
-    \define('EBML_ID_TRACKUID', 0x33c5);
-    //         [73][C5] -- A unique ID to identify the Track. This should be kept the same when making a direct stream copy of the Track to another file.
-    \define('EBML_ID_ATTACHMENTLINK', 0x3446);
-    //         [74][46] -- The UID of an attachment that is used by this codec.
-    \define('EBML_ID_CLUSTERBLOCKADDITIONS', 0x35a1);
-    //         [75][A1] -- Contain additional blocks to complete the main one. An EBML parser that has no knowledge of the Block structure could still see and use/skip these data.
-    \define('EBML_ID_CHANNELPOSITIONS', 0x347b);
-    //         [7D][7B] -- Table of horizontal angles for each successive channel, see appendix.
-    \define('EBML_ID_OUTPUTSAMPLINGFREQUENCY', 0x38b5);
-    //         [78][B5] -- Real output sampling frequency in Hz (used for SBR techniques).
-    \define('EBML_ID_TITLE', 0x3ba9);
-    //         [7B][A9] -- General name of the segment.
-    \define('EBML_ID_CHAPTERDISPLAY', 0x0);
-    //             [80] -- Contains all possible strings to use for the chapter display.
-    \define('EBML_ID_TRACKTYPE', 0x3);
-    //             [83] -- A set of track types coded on 8 bits (1: video, 2: audio, 3: complex, 0x10: logo, 0x11: subtitle, 0x12: buttons, 0x20: control).
-    \define('EBML_ID_CHAPSTRING', 0x5);
-    //             [85] -- Contains the string to use as the chapter atom.
-    \define('EBML_ID_CODECID', 0x6);
-    //             [86] -- An ID corresponding to the codec, see the codec page for more info.
-    \define('EBML_ID_FLAGDEFAULT', 0x8);
-    //             [88] -- Set if that track (audio, video or subs) SHOULD be used if no language found matches the user preference.
-    \define('EBML_ID_CHAPTERTRACKNUMBER', 0x9);
-    //             [89] -- UID of the Track to apply this chapter too. In the absense of a control track, choosing this chapter will select the listed Tracks and deselect unlisted tracks. Absense of this element indicates that the Chapter should be applied to any currently used Tracks.
-    \define('EBML_ID_CLUSTERSLICES', 0xe);
-    //             [8E] -- Contains slices description.
-    \define('EBML_ID_CHAPTERTRACK', 0xf);
-    //             [8F] -- List of tracks on which the chapter applies. If this element is not present, all tracks apply
-    \define('EBML_ID_CHAPTERTIMESTART', 0x11);
-    //             [91] -- Timecode of the start of Chapter (not scaled).
-    \define('EBML_ID_CHAPTERTIMEEND', 0x12);
-    //             [92] -- Timecode of the end of Chapter (timecode excluded, not scaled).
-    \define('EBML_ID_CUEREFTIME', 0x16);
-    //             [96] -- Timecode of the referenced Block.
-    \define('EBML_ID_CUEREFCLUSTER', 0x17);
-    //             [97] -- Position of the Cluster containing the referenced Block.
-    \define('EBML_ID_CHAPTERFLAGHIDDEN', 0x18);
-    //             [98] -- If a chapter is hidden (1), it should not be available to the user interface (but still to Control Tracks).
-    \define('EBML_ID_FLAGINTERLACED', 0x1a);
-    //             [9A] -- Set if the video is interlaced.
-    \define('EBML_ID_CLUSTERBLOCKDURATION', 0x1b);
-    //             [9B] -- The duration of the Block (based on TimecodeScale). This element is mandatory when DefaultDuration is set for the track. When not written and with no DefaultDuration, the value is assumed to be the difference between the timecode of this Block and the timecode of the next Block in "display" order (not coding order). This element can be useful at the end of a Track (as there is not other Block available), or when there is a break in a track like for subtitle tracks.
-    \define('EBML_ID_FLAGLACING', 0x1c);
-    //             [9C] -- Set if the track may contain blocks using lacing.
-    \define('EBML_ID_CHANNELS', 0x1f);
-    //             [9F] -- Numbers of channels in the track.
-    \define('EBML_ID_CLUSTERBLOCKGROUP', 0x20);
-    //             [A0] -- Basic container of information containing a single Block or BlockVirtual, and information specific to that Block/VirtualBlock.
-    \define('EBML_ID_CLUSTERBLOCK', 0x21);
-    //             [A1] -- Block containing the actual data to be rendered and a timecode relative to the Cluster Timecode.
-    \define('EBML_ID_CLUSTERBLOCKVIRTUAL', 0x22);
-    //             [A2] -- A Block with no data. It must be stored in the stream at the place the real Block should be in display order.
-    \define('EBML_ID_CLUSTERSIMPLEBLOCK', 0x23);
-    //             [A3] -- Similar to Block but without all the extra information, mostly used to reduced overhead when no extra feature is needed.
-    \define('EBML_ID_CLUSTERCODECSTATE', 0x24);
-    //             [A4] -- The new codec state to use. Data interpretation is private to the codec. This information should always be referenced by a seek entry.
-    \define('EBML_ID_CLUSTERBLOCKADDITIONAL', 0x25);
-    //             [A5] -- Interpreted by the codec as it wishes (using the BlockAddID).
-    \define('EBML_ID_CLUSTERBLOCKMORE', 0x26);
-    //             [A6] -- Contain the BlockAdditional and some parameters.
-    \define('EBML_ID_CLUSTERPOSITION', 0x27);
-    //             [A7] -- Position of the Cluster in the segment (0 in live broadcast streams). It might help to resynchronise offset on damaged streams.
-    \define('EBML_ID_CODECDECODEALL', 0x2a);
-    //             [AA] -- The codec can decode potentially damaged data.
-    \define('EBML_ID_CLUSTERPREVSIZE', 0x2b);
-    //             [AB] -- Size of the previous Cluster, in octets. Can be useful for backward playing.
-    \define('EBML_ID_TRACKENTRY', 0x2e);
-    //             [AE] -- Describes a track with all elements.
-    \define('EBML_ID_CLUSTERENCRYPTEDBLOCK', 0x2f);
-    //             [AF] -- Similar to SimpleBlock but the data inside the Block are Transformed (encrypt and/or signed).
-    \define('EBML_ID_PIXELWIDTH', 0x30);
-    //             [B0] -- Width of the encoded video frames in pixels.
-    \define('EBML_ID_CUETIME', 0x33);
-    //             [B3] -- Absolute timecode according to the segment time base.
-    \define('EBML_ID_SAMPLINGFREQUENCY', 0x35);
-    //             [B5] -- Sampling frequency in Hz.
-    \define('EBML_ID_CHAPTERATOM', 0x36);
-    //             [B6] -- Contains the atom information to use as the chapter atom (apply to all tracks).
-    \define('EBML_ID_CUETRACKPOSITIONS', 0x37);
-    //             [B7] -- Contain positions for different tracks corresponding to the timecode.
-    \define('EBML_ID_FLAGENABLED', 0x39);
-    //             [B9] -- Set if the track is used.
-    \define('EBML_ID_PIXELHEIGHT', 0x3a);
-    //             [BA] -- Height of the encoded video frames in pixels.
-    \define('EBML_ID_CUEPOINT', 0x3b);
-    //             [BB] -- Contains all information relative to a seek point in the segment.
-    \define('EBML_ID_CRC32', 0x3f);
-    //             [BF] -- The CRC is computed on all the data of the Master element it's in, regardless of its position. It's recommended to put the CRC value at the beggining of the Master element for easier reading. All level 1 elements should include a CRC-32.
-    \define('EBML_ID_CLUSTERBLOCKADDITIONID', 0x4b);
-    //             [CB] -- The ID of the BlockAdditional element (0 is the main Block).
-    \define('EBML_ID_CLUSTERLACENUMBER', 0x4c);
-    //             [CC] -- The reverse number of the frame in the lace (0 is the last frame, 1 is the next to last, etc). While there are a few files in the wild with this element, it is no longer in use and has been deprecated. Being able to interpret this element is not required for playback.
-    \define('EBML_ID_CLUSTERFRAMENUMBER', 0x4d);
-    //             [CD] -- The number of the frame to generate from this lace with this delay (allow you to generate many frames from the same Block/Frame).
-    \define('EBML_ID_CLUSTERDELAY', 0x4e);
-    //             [CE] -- The (scaled) delay to apply to the element.
-    \define('EBML_ID_CLUSTERDURATION', 0x4f);
-    //             [CF] -- The (scaled) duration to apply to the element.
-    \define('EBML_ID_TRACKNUMBER', 0x57);
-    //             [D7] -- The track number as used in the Block Header (using more than 127 tracks is not encouraged, though the design allows an unlimited number).
-    \define('EBML_ID_CUEREFERENCE', 0x5b);
-    //             [DB] -- The Clusters containing the required referenced Blocks.
-    \define('EBML_ID_VIDEO', 0x60);
-    //             [E0] -- Video settings.
-    \define('EBML_ID_AUDIO', 0x61);
-    //             [E1] -- Audio settings.
-    \define('EBML_ID_CLUSTERTIMESLICE', 0x68);
-    //             [E8] -- Contains extra time information about the data contained in the Block. While there are a few files in the wild with this element, it is no longer in use and has been deprecated. Being able to interpret this element is not required for playback.
-    \define('EBML_ID_CUECODECSTATE', 0x6a);
-    //             [EA] -- The position of the Codec State corresponding to this Cue element. 0 means that the data is taken from the initial Track Entry.
-    \define('EBML_ID_CUEREFCODECSTATE', 0x6b);
-    //             [EB] -- The position of the Codec State corresponding to this referenced element. 0 means that the data is taken from the initial Track Entry.
-    \define('EBML_ID_VOID', 0x6c);
-    //             [EC] -- Used to void damaged data, to avoid unexpected behaviors when using damaged data. The content is discarded. Also used to reserve space in a sub-element for later use.
-    \define('EBML_ID_CLUSTERTIMECODE', 0x67);
-    //             [E7] -- Absolute timecode of the cluster (based on TimecodeScale).
-    \define('EBML_ID_CLUSTERBLOCKADDID', 0x6e);
-    //             [EE] -- An ID to identify the BlockAdditional level.
-    \define('EBML_ID_CUECLUSTERPOSITION', 0x71);
-    //             [F1] -- The position of the Cluster containing the required Block.
-    \define('EBML_ID_CUETRACK', 0x77);
-    //             [F7] -- The track for which a position is given.
-    \define('EBML_ID_CLUSTERREFERENCEPRIORITY', 0x7a);
-    //             [FA] -- This frame is referenced and has the specified cache priority. In cache only a frame of the same or higher priority can replace this frame. A value of 0 means the frame is not referenced.
-    \define('EBML_ID_CLUSTERREFERENCEBLOCK', 0x7b);
-    //             [FB] -- Timecode of another frame used as a reference (ie: B or P frame). The timecode is relative to the block it's attached to.
-    \define('EBML_ID_CLUSTERREFERENCEVIRTUAL', 0x7d);
-    /**
-     * SimplePie Name
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAME instead.
-     */
-    \define('SIMPLEPIE_NAME', \SimplePie\SimplePie::NAME);
-    /**
-     * SimplePie Version
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::VERSION instead.
-     */
-    \define('SIMPLEPIE_VERSION', \SimplePie\SimplePie::VERSION);
-    /**
-     * SimplePie Build
-     * @todo Hardcode for release (there's no need to have to call SimplePie_Misc::get_build() only every load of simplepie.inc)
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\Misc::get_build() instead.
-     */
-    \define('SIMPLEPIE_BUILD', \gmdate('YmdHis', \SimplePie\Misc::get_build()));
-    /**
-     * SimplePie Website URL
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::URL instead.
-     */
-    \define('SIMPLEPIE_URL', \SimplePie\SimplePie::URL);
-    /**
-     * SimplePie Useragent
-     * @see SimplePie::set_useragent()
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\Misc::get_default_useragent() instead.
-     */
-    \define('SIMPLEPIE_USERAGENT', \SimplePie\Misc::get_default_useragent());
-    /**
-     * SimplePie Linkback
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::LINKBACK instead.
-     */
-    \define('SIMPLEPIE_LINKBACK', \SimplePie\SimplePie::LINKBACK);
-    /**
-     * No Autodiscovery
-     * @see SimplePie::set_autodiscovery_level()
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::LOCATOR_NONE instead.
-     */
-    \define('SIMPLEPIE_LOCATOR_NONE', \SimplePie\SimplePie::LOCATOR_NONE);
-    /**
-     * Feed Link Element Autodiscovery
-     * @see SimplePie::set_autodiscovery_level()
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::LOCATOR_AUTODISCOVERY instead.
-     */
-    \define('SIMPLEPIE_LOCATOR_AUTODISCOVERY', \SimplePie\SimplePie::LOCATOR_AUTODISCOVERY);
-    /**
-     * Local Feed Extension Autodiscovery
-     * @see SimplePie::set_autodiscovery_level()
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::LOCATOR_LOCAL_EXTENSION instead.
-     */
-    \define('SIMPLEPIE_LOCATOR_LOCAL_EXTENSION', \SimplePie\SimplePie::LOCATOR_LOCAL_EXTENSION);
-    /**
-     * Local Feed Body Autodiscovery
-     * @see SimplePie::set_autodiscovery_level()
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::LOCATOR_LOCAL_BODY instead.
-     */
-    \define('SIMPLEPIE_LOCATOR_LOCAL_BODY', \SimplePie\SimplePie::LOCATOR_LOCAL_BODY);
-    /**
-     * Remote Feed Extension Autodiscovery
-     * @see SimplePie::set_autodiscovery_level()
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::LOCATOR_REMOTE_EXTENSION instead.
-     */
-    \define('SIMPLEPIE_LOCATOR_REMOTE_EXTENSION', \SimplePie\SimplePie::LOCATOR_REMOTE_EXTENSION);
-    /**
-     * Remote Feed Body Autodiscovery
-     * @see SimplePie::set_autodiscovery_level()
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::LOCATOR_REMOTE_BODY instead.
-     */
-    \define('SIMPLEPIE_LOCATOR_REMOTE_BODY', \SimplePie\SimplePie::LOCATOR_REMOTE_BODY);
-    /**
-     * All Feed Autodiscovery
-     * @see SimplePie::set_autodiscovery_level()
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::LOCATOR_ALL instead.
-     */
-    \define('SIMPLEPIE_LOCATOR_ALL', \SimplePie\SimplePie::LOCATOR_ALL);
-    /**
-     * No known feed type
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::TYPE_NONE instead.
-     */
-    \define('SIMPLEPIE_TYPE_NONE', \SimplePie\SimplePie::TYPE_NONE);
-    /**
-     * RSS 0.90
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::TYPE_RSS_090 instead.
-     */
-    \define('SIMPLEPIE_TYPE_RSS_090', \SimplePie\SimplePie::TYPE_RSS_090);
-    /**
-     * RSS 0.91 (Netscape)
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::TYPE_RSS_091_NETSCAPE instead.
-     */
-    \define('SIMPLEPIE_TYPE_RSS_091_NETSCAPE', \SimplePie\SimplePie::TYPE_RSS_091_NETSCAPE);
-    /**
-     * RSS 0.91 (Userland)
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::TYPE_RSS_091_USERLAND instead.
-     */
-    \define('SIMPLEPIE_TYPE_RSS_091_USERLAND', \SimplePie\SimplePie::TYPE_RSS_091_USERLAND);
-    /**
-     * RSS 0.91 (both Netscape and Userland)
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::TYPE_RSS_091 instead.
-     */
-    \define('SIMPLEPIE_TYPE_RSS_091', \SimplePie\SimplePie::TYPE_RSS_091);
-    /**
-     * RSS 0.92
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::TYPE_RSS_092 instead.
-     */
-    \define('SIMPLEPIE_TYPE_RSS_092', \SimplePie\SimplePie::TYPE_RSS_092);
-    /**
-     * RSS 0.93
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::TYPE_RSS_093 instead.
-     */
-    \define('SIMPLEPIE_TYPE_RSS_093', \SimplePie\SimplePie::TYPE_RSS_093);
-    /**
-     * RSS 0.94
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::TYPE_RSS_094 instead.
-     */
-    \define('SIMPLEPIE_TYPE_RSS_094', \SimplePie\SimplePie::TYPE_RSS_094);
-    /**
-     * RSS 1.0
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::TYPE_RSS_10 instead.
-     */
-    \define('SIMPLEPIE_TYPE_RSS_10', \SimplePie\SimplePie::TYPE_RSS_10);
-    /**
-     * RSS 2.0
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::TYPE_RSS_20 instead.
-     */
-    \define('SIMPLEPIE_TYPE_RSS_20', \SimplePie\SimplePie::TYPE_RSS_20);
-    /**
-     * RDF-based RSS
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::TYPE_RSS_RDF instead.
-     */
-    \define('SIMPLEPIE_TYPE_RSS_RDF', \SimplePie\SimplePie::TYPE_RSS_RDF);
-    /**
-     * Non-RDF-based RSS (truly intended as syndication format)
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::TYPE_RSS_SYNDICATION instead.
-     */
-    \define('SIMPLEPIE_TYPE_RSS_SYNDICATION', \SimplePie\SimplePie::TYPE_RSS_SYNDICATION);
-    /**
-     * All RSS
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::TYPE_RSS_ALL instead.
-     */
-    \define('SIMPLEPIE_TYPE_RSS_ALL', \SimplePie\SimplePie::TYPE_RSS_ALL);
-    /**
-     * Atom 0.3
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::TYPE_ATOM_03 instead.
-     */
-    \define('SIMPLEPIE_TYPE_ATOM_03', \SimplePie\SimplePie::TYPE_ATOM_03);
-    /**
-     * Atom 1.0
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::TYPE_ATOM_10 instead.
-     */
-    \define('SIMPLEPIE_TYPE_ATOM_10', \SimplePie\SimplePie::TYPE_ATOM_10);
-    /**
-     * All Atom
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::TYPE_ATOM_ALL instead.
-     */
-    \define('SIMPLEPIE_TYPE_ATOM_ALL', \SimplePie\SimplePie::TYPE_ATOM_ALL);
-    /**
-     * All feed types
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::TYPE_ALL instead.
-     */
-    \define('SIMPLEPIE_TYPE_ALL', \SimplePie\SimplePie::TYPE_ALL);
-    /**
-     * No construct
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::CONSTRUCT_NONE instead.
-     */
-    \define('SIMPLEPIE_CONSTRUCT_NONE', \SimplePie\SimplePie::CONSTRUCT_NONE);
-    /**
-     * Text construct
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::CONSTRUCT_TEXT instead.
-     */
-    \define('SIMPLEPIE_CONSTRUCT_TEXT', \SimplePie\SimplePie::CONSTRUCT_TEXT);
-    /**
-     * HTML construct
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::CONSTRUCT_HTML instead.
-     */
-    \define('SIMPLEPIE_CONSTRUCT_HTML', \SimplePie\SimplePie::CONSTRUCT_HTML);
-    /**
-     * XHTML construct
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::CONSTRUCT_XHTML instead.
-     */
-    \define('SIMPLEPIE_CONSTRUCT_XHTML', \SimplePie\SimplePie::CONSTRUCT_XHTML);
-    /**
-     * base64-encoded construct
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::CONSTRUCT_BASE64 instead.
-     */
-    \define('SIMPLEPIE_CONSTRUCT_BASE64', \SimplePie\SimplePie::CONSTRUCT_BASE64);
-    /**
-     * IRI construct
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::CONSTRUCT_IRI instead.
-     */
-    \define('SIMPLEPIE_CONSTRUCT_IRI', \SimplePie\SimplePie::CONSTRUCT_IRI);
-    /**
-     * A construct that might be HTML
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::CONSTRUCT_MAYBE_HTML instead.
-     */
-    \define('SIMPLEPIE_CONSTRUCT_MAYBE_HTML', \SimplePie\SimplePie::CONSTRUCT_MAYBE_HTML);
-    /**
-     * All constructs
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::CONSTRUCT_ALL instead.
-     */
-    \define('SIMPLEPIE_CONSTRUCT_ALL', \SimplePie\SimplePie::CONSTRUCT_ALL);
-    /**
-     * Don't change case
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::SAME_CASE instead.
-     */
-    \define('SIMPLEPIE_SAME_CASE', \SimplePie\SimplePie::SAME_CASE);
-    /**
-     * Change to lowercase
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::LOWERCASE instead.
-     */
-    \define('SIMPLEPIE_LOWERCASE', \SimplePie\SimplePie::LOWERCASE);
-    /**
-     * Change to uppercase
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::UPPERCASE instead.
-     */
-    \define('SIMPLEPIE_UPPERCASE', \SimplePie\SimplePie::UPPERCASE);
-    /**
-     * PCRE for HTML attributes
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::PCRE_HTML_ATTRIBUTE instead.
-     */
-    \define('SIMPLEPIE_PCRE_HTML_ATTRIBUTE', \SimplePie\SimplePie::PCRE_HTML_ATTRIBUTE);
-    /**
-     * PCRE for XML attributes
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::PCRE_XML_ATTRIBUTE instead.
-     */
-    \define('SIMPLEPIE_PCRE_XML_ATTRIBUTE', \SimplePie\SimplePie::PCRE_XML_ATTRIBUTE);
-    /**
-     * XML Namespace
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAMESPACE_XML instead.
-     */
-    \define('SIMPLEPIE_NAMESPACE_XML', \SimplePie\SimplePie::NAMESPACE_XML);
-    /**
-     * Atom 1.0 Namespace
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAMESPACE_ATOM_10 instead.
-     */
-    \define('SIMPLEPIE_NAMESPACE_ATOM_10', \SimplePie\SimplePie::NAMESPACE_ATOM_10);
-    /**
-     * Atom 0.3 Namespace
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAMESPACE_ATOM_03 instead.
-     */
-    \define('SIMPLEPIE_NAMESPACE_ATOM_03', \SimplePie\SimplePie::NAMESPACE_ATOM_03);
-    /**
-     * RDF Namespace
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAMESPACE_RDF instead.
-     */
-    \define('SIMPLEPIE_NAMESPACE_RDF', \SimplePie\SimplePie::NAMESPACE_RDF);
-    /**
-     * RSS 0.90 Namespace
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAMESPACE_RSS_090 instead.
-     */
-    \define('SIMPLEPIE_NAMESPACE_RSS_090', \SimplePie\SimplePie::NAMESPACE_RSS_090);
-    /**
-     * RSS 1.0 Namespace
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAMESPACE_RSS_10 instead.
-     */
-    \define('SIMPLEPIE_NAMESPACE_RSS_10', \SimplePie\SimplePie::NAMESPACE_RSS_10);
-    /**
-     * RSS 1.0 Content Module Namespace
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAMESPACE_RSS_10_MODULES_CONTENT instead.
-     */
-    \define('SIMPLEPIE_NAMESPACE_RSS_10_MODULES_CONTENT', \SimplePie\SimplePie::NAMESPACE_RSS_10_MODULES_CONTENT);
-    /**
-     * RSS 2.0 Namespace
-     * (Stupid, I know, but I'm certain it will confuse people less with support.)
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAMESPACE_RSS_20 instead.
-     */
-    \define('SIMPLEPIE_NAMESPACE_RSS_20', \SimplePie\SimplePie::NAMESPACE_RSS_20);
-    /**
-     * DC 1.0 Namespace
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAMESPACE_DC_10 instead.
-     */
-    \define('SIMPLEPIE_NAMESPACE_DC_10', \SimplePie\SimplePie::NAMESPACE_DC_10);
-    /**
-     * DC 1.1 Namespace
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAMESPACE_DC_11 instead.
-     */
-    \define('SIMPLEPIE_NAMESPACE_DC_11', \SimplePie\SimplePie::NAMESPACE_DC_11);
-    /**
-     * W3C Basic Geo (WGS84 lat/long) Vocabulary Namespace
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAMESPACE_W3C_BASIC_GEO instead.
-     */
-    \define('SIMPLEPIE_NAMESPACE_W3C_BASIC_GEO', \SimplePie\SimplePie::NAMESPACE_W3C_BASIC_GEO);
-    /**
-     * GeoRSS Namespace
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAMESPACE_GEORSS instead.
-     */
-    \define('SIMPLEPIE_NAMESPACE_GEORSS', \SimplePie\SimplePie::NAMESPACE_GEORSS);
-    /**
-     * Media RSS Namespace
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAMESPACE_MEDIARSS instead.
-     */
-    \define('SIMPLEPIE_NAMESPACE_MEDIARSS', \SimplePie\SimplePie::NAMESPACE_MEDIARSS);
-    /**
-     * Wrong Media RSS Namespace. Caused by a long-standing typo in the spec.
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAMESPACE_MEDIARSS_WRONG instead.
-     */
-    \define('SIMPLEPIE_NAMESPACE_MEDIARSS_WRONG', \SimplePie\SimplePie::NAMESPACE_MEDIARSS_WRONG);
-    /**
-     * Wrong Media RSS Namespace #2. New namespace introduced in Media RSS 1.5.
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAMESPACE_MEDIARSS_WRONG2 instead.
-     */
-    \define('SIMPLEPIE_NAMESPACE_MEDIARSS_WRONG2', \SimplePie\SimplePie::NAMESPACE_MEDIARSS_WRONG2);
-    /**
-     * Wrong Media RSS Namespace #3. A possible typo of the Media RSS 1.5 namespace.
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAMESPACE_MEDIARSS_WRONG3 instead.
-     */
-    \define('SIMPLEPIE_NAMESPACE_MEDIARSS_WRONG3', \SimplePie\SimplePie::NAMESPACE_MEDIARSS_WRONG3);
-    /**
-     * Wrong Media RSS Namespace #4. New spec location after the RSS Advisory Board takes it over, but not a valid namespace.
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAMESPACE_MEDIARSS_WRONG4 instead.
-     */
-    \define('SIMPLEPIE_NAMESPACE_MEDIARSS_WRONG4', \SimplePie\SimplePie::NAMESPACE_MEDIARSS_WRONG4);
-    /**
-     * Wrong Media RSS Namespace #5. A possible typo of the RSS Advisory Board URL.
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAMESPACE_MEDIARSS_WRONG5 instead.
-     */
-    \define('SIMPLEPIE_NAMESPACE_MEDIARSS_WRONG5', \SimplePie\SimplePie::NAMESPACE_MEDIARSS_WRONG5);
-    /**
-     * iTunes RSS Namespace
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAMESPACE_ITUNES instead.
-     */
-    \define('SIMPLEPIE_NAMESPACE_ITUNES', \SimplePie\SimplePie::NAMESPACE_ITUNES);
-    /**
-     * XHTML Namespace
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::NAMESPACE_XHTML instead.
-     */
-    \define('SIMPLEPIE_NAMESPACE_XHTML', \SimplePie\SimplePie::NAMESPACE_XHTML);
-    /**
-     * IANA Link Relations Registry
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::IANA_LINK_RELATIONS_REGISTRY instead.
-     */
-    \define('SIMPLEPIE_IANA_LINK_RELATIONS_REGISTRY', \SimplePie\SimplePie::IANA_LINK_RELATIONS_REGISTRY);
-    /**
-     * No file source
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::FILE_SOURCE_NONE instead.
-     */
-    \define('SIMPLEPIE_FILE_SOURCE_NONE', \SimplePie\SimplePie::FILE_SOURCE_NONE);
-    /**
-     * Remote file source
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::FILE_SOURCE_REMOTE instead.
-     */
-    \define('SIMPLEPIE_FILE_SOURCE_REMOTE', \SimplePie\SimplePie::FILE_SOURCE_REMOTE);
-    /**
-     * Local file source
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::FILE_SOURCE_LOCAL instead.
-     */
-    \define('SIMPLEPIE_FILE_SOURCE_LOCAL', \SimplePie\SimplePie::FILE_SOURCE_LOCAL);
-    /**
-     * fsockopen() file source
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::FILE_SOURCE_FSOCKOPEN instead.
-     */
-    \define('SIMPLEPIE_FILE_SOURCE_FSOCKOPEN', \SimplePie\SimplePie::FILE_SOURCE_FSOCKOPEN);
-    /**
-     * cURL file source
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::FILE_SOURCE_CURL instead.
-     */
-    \define('SIMPLEPIE_FILE_SOURCE_CURL', \SimplePie\SimplePie::FILE_SOURCE_CURL);
-    /**
-     * file_get_contents() file source
-     * @deprecated since SimplePie 1.7.0, use \SimplePie\SimplePie::FILE_SOURCE_FILE_GET_CONTENTS instead.
-     */
-    \define('SIMPLEPIE_FILE_SOURCE_FILE_GET_CONTENTS', \SimplePie\SimplePie::FILE_SOURCE_FILE_GET_CONTENTS);
     /**
      * Instantiates the admin bar object and set it up as a global for access elsewhere.
      *
@@ -98904,38 +98427,8 @@ namespace {
     function get_block_wrapper_attributes($extra_attributes = array())
     {
     }
-    /**
-     * WordPress database access abstraction class.
-     *
-     * Original code from {@link http://php.justinvincent.com Justin Vincent (justin@visunet.ie)}
-     *
-     * @package WordPress
-     * @subpackage Database
-     * @since 0.71
-     */
-    /**
-     * @since 0.71
-     */
-    \define('EZSQL_VERSION', 'WP1.25');
-    /**
-     * @since 0.71
-     */
-    \define('OBJECT', 'OBJECT');
     // phpcs:ignore Generic.NamingConventions.UpperCaseConstantName.ConstantNotUpperCase
     \define('object', 'OBJECT');
-    // Back compat.
-    /**
-     * @since 2.5.0
-     */
-    \define('OBJECT_K', 'OBJECT_K');
-    /**
-     * @since 0.71
-     */
-    \define('ARRAY_A', 'ARRAY_A');
-    /**
-     * @since 0.71
-     */
-    \define('ARRAY_N', 'ARRAY_N');
     /**
      * Retrieves the author of the current comment.
      *
@@ -101482,41 +100975,10 @@ namespace {
     function _upgrade_cron_array($cron)
     {
     }
-    /**#@+
-     * Constants for expressing human-readable data sizes in their respective number of bytes.
-     *
-     * @since 4.4.0
-     * @since 6.0.0 `PB_IN_BYTES`, `EB_IN_BYTES`, `ZB_IN_BYTES`, and `YB_IN_BYTES` were added.
-     */
-    define('KB_IN_BYTES', 1024);
-    define('MB_IN_BYTES', 1024 * KB_IN_BYTES);
-    define('GB_IN_BYTES', 1024 * MB_IN_BYTES);
-    define('TB_IN_BYTES', 1024 * GB_IN_BYTES);
     define('PB_IN_BYTES', 1024 * TB_IN_BYTES);
     define('EB_IN_BYTES', 1024 * PB_IN_BYTES);
     define('ZB_IN_BYTES', 1024 * EB_IN_BYTES);
     define('YB_IN_BYTES', 1024 * ZB_IN_BYTES);
-    // Constants for features added to WP that should short-circuit their plugin implementations.
-    define('WP_FEATURE_BETTER_PASSWORDS', true);
-    /**#@+
-     * Constants for expressing human-readable intervals
-     * in their respective number of seconds.
-     *
-     * Please note that these values are approximate and are provided for convenience.
-     * For example, MONTH_IN_SECONDS wrongly assumes every month has 30 days and
-     * YEAR_IN_SECONDS does not take leap years into account.
-     *
-     * If you need more accuracy please consider using the DateTime class (https://www.php.net/manual/en/class.datetime.php).
-     *
-     * @since 3.5.0
-     * @since 4.4.0 Introduced `MONTH_IN_SECONDS`.
-     */
-    define('MINUTE_IN_SECONDS', 60);
-    define('HOUR_IN_SECONDS', 60 * MINUTE_IN_SECONDS);
-    define('DAY_IN_SECONDS', 24 * HOUR_IN_SECONDS);
-    define('WEEK_IN_SECONDS', 7 * DAY_IN_SECONDS);
-    define('MONTH_IN_SECONDS', 30 * DAY_IN_SECONDS);
-    define('YEAR_IN_SECONDS', 365 * DAY_IN_SECONDS);
     /**
      * Defines initial WordPress constants.
      *
@@ -114845,7 +114307,6 @@ namespace {
     function get_file($path)
     {
     }
-    \define('CUSTOM_TAGS', \false);
     /**
      * Filters text content and strips out disallowed HTML.
      *
@@ -122009,7 +121470,6 @@ namespace {
      * @subpackage Multisite
      */
     \define('MS_FILES_REQUEST', \true);
-    \define('SHORTINIT', \true);
     /**
      * Gets the network's site and user counts.
      *
@@ -126465,7 +125925,6 @@ namespace {
     function _wp_filter_build_unique_id($hook_name, $callback, $priority)
     {
     }
-    \define('PO_MAX_LINE_LEN', 79);
     /**
      * Retrieve the format slug for a post
      *
@@ -130935,19 +130394,6 @@ namespace {
     {
     }
     /**
-     * REST API functions.
-     *
-     * @package WordPress
-     * @subpackage REST_API
-     * @since 4.4.0
-     */
-    /**
-     * Version number for our API.
-     *
-     * @var string
-     */
-    \define('REST_API_VERSION', '2.0');
-    /**
      * Registers a REST API route.
      *
      * Note: Do not use before the {@see 'rest_api_init'} hook.
@@ -132420,111 +131866,6 @@ namespace {
     function _wp_preview_meta_filter($value, $object_id, $meta_key, $single)
     {
     }
-    /**
-     * WordPress Rewrite API
-     *
-     * @package WordPress
-     * @subpackage Rewrite
-     */
-    /**
-     * Endpoint mask that matches nothing.
-     *
-     * @since 2.1.0
-     */
-    \define('EP_NONE', 0);
-    /**
-     * Endpoint mask that matches post permalinks.
-     *
-     * @since 2.1.0
-     */
-    \define('EP_PERMALINK', 1);
-    /**
-     * Endpoint mask that matches attachment permalinks.
-     *
-     * @since 2.1.0
-     */
-    \define('EP_ATTACHMENT', 2);
-    /**
-     * Endpoint mask that matches any date archives.
-     *
-     * @since 2.1.0
-     */
-    \define('EP_DATE', 4);
-    /**
-     * Endpoint mask that matches yearly archives.
-     *
-     * @since 2.1.0
-     */
-    \define('EP_YEAR', 8);
-    /**
-     * Endpoint mask that matches monthly archives.
-     *
-     * @since 2.1.0
-     */
-    \define('EP_MONTH', 16);
-    /**
-     * Endpoint mask that matches daily archives.
-     *
-     * @since 2.1.0
-     */
-    \define('EP_DAY', 32);
-    /**
-     * Endpoint mask that matches the site root.
-     *
-     * @since 2.1.0
-     */
-    \define('EP_ROOT', 64);
-    /**
-     * Endpoint mask that matches comment feeds.
-     *
-     * @since 2.1.0
-     */
-    \define('EP_COMMENTS', 128);
-    /**
-     * Endpoint mask that matches searches.
-     *
-     * Note that this only matches a search at a "pretty" URL such as
-     * `/search/my-search-term`, not `?s=my-search-term`.
-     *
-     * @since 2.1.0
-     */
-    \define('EP_SEARCH', 256);
-    /**
-     * Endpoint mask that matches category archives.
-     *
-     * @since 2.1.0
-     */
-    \define('EP_CATEGORIES', 512);
-    /**
-     * Endpoint mask that matches tag archives.
-     *
-     * @since 2.3.0
-     */
-    \define('EP_TAGS', 1024);
-    /**
-     * Endpoint mask that matches author archives.
-     *
-     * @since 2.1.0
-     */
-    \define('EP_AUTHORS', 2048);
-    /**
-     * Endpoint mask that matches pages.
-     *
-     * @since 2.1.0
-     */
-    \define('EP_PAGES', 4096);
-    /**
-     * Endpoint mask that matches all archive views.
-     *
-     * @since 3.7.0
-     */
-    \define('EP_ALL_ARCHIVES', \EP_DATE | \EP_YEAR | \EP_MONTH | \EP_DAY | \EP_CATEGORIES | \EP_TAGS | \EP_AUTHORS);
-    /**
-     * Endpoint mask that matches everything.
-     *
-     * @since 2.1.0
-     */
-    \define('EP_ALL', \EP_PERMALINK | \EP_ATTACHMENT | \EP_ROOT | \EP_COMMENTS | \EP_SEARCH | \EP_PAGES | \EP_ALL_ARCHIVES);
     /**
      * Adds a rewrite rule that transforms a URL structure to a set of query vars.
      *
@@ -139989,7 +139330,6 @@ namespace {
     function wp_login_viewport_meta()
     {
     }
-    \define('WP_MAIL_INTERVAL', 5 * \MINUTE_IN_SECONDS);
     /**
      * Prints signup_header via wp_head.
      *
@@ -140200,17 +139540,6 @@ namespace {
     function trackback_response($error = 0, $error_message = '')
     {
     }
-    /**
-     * XML-RPC protocol support for WordPress
-     *
-     * @package WordPress
-     */
-    /**
-     * Whether this is an XML-RPC Request.
-     *
-     * @var bool
-     */
-    \define('XMLRPC_REQUEST', \true);
     /**
      * logIO() - Writes logging info to a file.
      *
